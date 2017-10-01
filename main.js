@@ -12,11 +12,11 @@
 				    '100%': {'background-color': 'green'}
 				}]);	
 
-				$(".grid-one").css("animation","scrollit 1s ease 0s 1");
-				$(".grid-two").css("animation","scrollit 1s ease 0.2s 1");
-				$(".grid-three").css("animation","scrollit 1s ease 0.4s 1");
-				$(".grid-four").css("animation","scrollit 1s ease 0.6s 1");
-				$(".grid-five").css("animation","scrollit 1s ease 0.8s 1");
+				$(".grid-one").playKeyframe('scrollit 1s ease 0s 1',complete);
+				$(".grid-two").playKeyframe('scrollit 1s ease 0.2s 1',complete);
+				$(".grid-three").playKeyframe('scrollit 1s ease 0.4s 1',complete);
+				$(".grid-four").playKeyframe('scrollit 1s ease 0.6s 1',complete);
+				$(".grid-five").playKeyframe('scrollit 1s ease 0.8s 1',complete);
 
 				/*$(".grid-one").css("animation","initial");
 				$(".grid-two").css("animation","initial");
