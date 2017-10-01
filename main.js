@@ -1,40 +1,21 @@
-	
+		
 		var count = 0;
 
 		function scroller(){
 				count++;
-				alert(count);		
+						
 				$.keyframe.define([{
 				   	name: 'scrollit',
 				    '100%': {'transform' : 'translate(100%,0)'}
 					
 				}]);	
 
-					/*$("body").playKeyframe("change".count." 0.2s ease 0s 1 normal forwards");*/
-					$(".grid-one").playKeyframe('scrollit 1s ease 0s 1 normal forwards');
-					$(".grid-two").playKeyframe('scrollit 1s ease 0.2s normal forwards 1');
-					$(".grid-three").playKeyframe('scrollit 1s ease 0.4s 1 normal forwards');
-					$(".grid-four").playKeyframe('scrollit 1s ease 0.6s 1 normal forwards');
-					$(".grid-five").playKeyframe('scrollit 1s ease 0.8s 1 normal forwards');
-		
-					setTimeout(function(){
-						$("body").css("background","url('test2.png')");
-					},200);	
+					$("body").css("background","url('test2.png')");
 
-
-				/*setTimeout( function(){ 
-					$(".grid-one").css("animation","initial");
-					$(".grid-two").css("animation","initial");
-					$(".grid-three").css("animation","initial");
-					$(".grid-four").css("animation","initial");
-					$(".grid-five").css("animation","initial");
-
- 										}  , 1800 );*/
-				
-
+					$(".grid-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards');
+					$(".grid-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards 1');
+					$(".grid-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
+					$(".grid-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
+					$(".grid-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');
+					
 		};
-
-		
-
-		
-
