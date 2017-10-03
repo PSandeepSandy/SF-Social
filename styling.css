@@ -135,8 +135,7 @@
 	height:19vh;
 	margin:0px;
 	padding:0px;
-	background-color:white;
-
+	/*background-color:white;*/
 }
 
 .grid-third-one{
@@ -145,6 +144,7 @@
 	opacity:0.3;*/
 	top:0;
 	left:0;
+	background-color:green;
 	
 }
 
@@ -154,7 +154,7 @@
 	top:20%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background-color:green;
 }
 
 .grid-third-three{
@@ -163,7 +163,7 @@
 	top:40%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background-color:green;
 }
 
 .grid-third-four{
@@ -172,7 +172,7 @@
 	top:60%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background-color:green;
 }
 
 .grid-third-five{
@@ -181,7 +181,7 @@
 	top:80%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background-color:green;
 }
 
 .grids-fourth{
