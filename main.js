@@ -44,7 +44,7 @@
 						$(".grid-second-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
 
 						//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-						$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+						$(".main-second-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
 
 						setTimeout(function(){
 							$(".main-third-back").css("left","0");
@@ -61,7 +61,7 @@
 						$(".grid-third-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
 
 						//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-						$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+						$(".main-third-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
 
 						setTimeout(function(){
 							$(".main-fourth-back").css("left","0");
