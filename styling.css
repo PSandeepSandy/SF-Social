@@ -13,8 +13,8 @@
 	opacity:0.3;*/
 	top:0;
 	left:0;
-	/*background:url("test.png");*/
-	background-color:white;
+	background:url("test.png");
+	/*background-color:white;*/
 	border:0.1px solid grey;
 }
 
@@ -24,9 +24,9 @@
 	top:20%;
 	left:0;
 	/*opacity:0.3;*/
-	/*background:url("test.png");
-	background-position: 0% 21%;*/
-	background-color:white;
+	background:url("test.png");
+	background-position: 0% 21%;
+	/*background-color:white;*/
 	border:0.1px solid grey;
 }
 
@@ -36,9 +36,9 @@
 	top:40%;
 	left:0;
 	/*opacity:0.3;*/
-	/*background:url("test.png");
-	background-position: 0% 21%;*/
-	background-color:white;
+	background:url("test.png");
+	background-position: 0% 42%;
+	/*background-color:white;*/
 	border:0.1px solid grey;
 }
 
@@ -48,9 +48,9 @@
 	top:60%;
 	left:0;
 	/*opacity:0.3;*/
-	/*background:url("test.png");
-	background-position: 0% 21%;*/
-	background-color:white;
+	background:url("test.png");
+	background-position: 0% 63%;
+	/*background-color:white;*/
 	border:0.1px solid grey;
 }
 
@@ -60,9 +60,9 @@
 	top:80%;
 	left:0;
 	/*opacity:0.3;*/
-	/*background:url("test.png");
-	background-position: 0% 21%;*/
-	background-color:white;
+	background:url("test.png");
+	background-position: 0% 84%;
+	/*background-color:white;*/
 	border-top:0.1px solid grey;
 
 }
@@ -127,7 +127,7 @@
 .grids-third{
 	/*background:linear-gradient(white,blue);*/
 	width:100%;
-	height:20%;
+	height:19vh;
 	margin:0px;
 	padding:0px;
 	background-color:white;
@@ -135,7 +135,7 @@
 }
 
 .grid-third-one{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);
 	opacity:0.3;*/
 	top:0;
@@ -144,7 +144,7 @@
 }
 
 .grid-third-two{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:20%;
 	left:0;
@@ -153,7 +153,7 @@
 }
 
 .grid-third-three{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:40%;
 	left:0;
@@ -162,7 +162,7 @@
 }
 
 .grid-third-four{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:60%;
 	left:0;
@@ -171,7 +171,7 @@
 }
 
 .grid-third-five{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:80%;
 	left:0;
@@ -182,7 +182,7 @@
 .grids-fourth{
 	/*background:linear-gradient(white,blue);*/
 	width:100%;
-	height:20%;
+	height:19vh;
 	margin:0px;
 	padding:0px;
 	background-color:white;
@@ -190,7 +190,7 @@
 }
 
 .grid-fourth-one{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);
 	opacity:0.3;*/
 	top:0;
@@ -199,7 +199,7 @@
 }
 
 .grid-fourth-two{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:20%;
 	left:0;
@@ -208,7 +208,7 @@
 }
 
 .grid-fourth-three{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:40%;
 	left:0;
@@ -217,7 +217,7 @@
 }
 
 .grid-fourth-four{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:60%;
 	left:0;
@@ -226,7 +226,7 @@
 }
 
 .grid-fourth-five{
-	position:absolute;
+	position:relative;
 	/*background:linear-gradient(white,blue);*/
 	top:80%;
 	left:0;
@@ -244,7 +244,8 @@
 
 .main-second-back{
 	position:absolute;
-	left:-100vw;	
+	left:-100vw;
+	width:100%;	
 }
 
 .main-second-content{
@@ -256,6 +257,7 @@
 .main-third-back{
 	position:absolute;
 	left:-200vw;	
+	width:100%;
 }
 
 .main-third-content{
@@ -267,6 +269,7 @@
 .main-fourth-back{
 	position:absolute;
 	left:-300vw;	
+	width:100%;
 }
 
 .main-fourth-content{
