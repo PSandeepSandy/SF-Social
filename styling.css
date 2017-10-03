@@ -74,7 +74,7 @@
 	height:19vh;
 	margin:0px;
 	padding:0px;
-	background-color:white;
+	/*background-color:white;*/
 
 }
 
@@ -84,7 +84,8 @@
 	opacity:0.3;*/
 	top:0;
 	left:0;
-		
+	background:url("test2.png");
+
 }
 
 .grid-second-two{
@@ -93,7 +94,8 @@
 	top:20%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background:url("test2.png");
+	background-position:0% 19.5%;	
 }
 
 .grid-second-three{
@@ -102,7 +104,8 @@
 	top:40%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background:url("test2.png");
+	background-position:0% 39%;	
 }
 
 .grid-second-four{
@@ -111,7 +114,8 @@
 	top:60%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background:url("test2.png");
+	background-position:0% 58.5%;
 }
 
 .grid-second-five{
@@ -120,7 +124,8 @@
 	top:80%;
 	left:0;
 	/*opacity:0.3;*/
-	
+	background:url("test2.png");
+	background-position:0% 78%;
 }
 
 
