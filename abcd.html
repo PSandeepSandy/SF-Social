@@ -1,0 +1,1481 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <base href="/">
+
+
+        <meta name="author" content="enjoyIT">
+<meta name="publisher" content="Thomas St. John">
+<meta name="copyright" content="Thomas St. John">
+<meta name="description" content="Business managers, international accountants, lawyers, tax professionals and more.  75+ leading global professionals specializing in entertainment and sports. Solving complex problems, managing money with absolute integrity, and resolving the trickiest of tax situations, to give our clients clarity and control. That's where our talents lie. And that's what we're passionate about. Offices in London, Los Angeles and Amsterdam.">
+<meta name="keywords" content="International Tax, Los Angeles, Amsterdam, London, financial advisors, business managers, book keeping, accounts, insurance, entertainment specialist, sports specialist, clarity, managing money, better communications, support, advisory, music, film, tv, sports, talent, accountants, international accountants, USA,">
+<meta name="page-topic" content="Dienstleistung">
+<meta name="page-type" content="Produktinfo">
+<meta name="audience" content="Alle"><meta http-equiv="content-language" content="en">
+<meta name="robots" content="index, follow">
+
+
+
+        <link id="fontsCss" href="./css/fonts.css" rel="stylesheet" type="text/css">
+        <link href="./css/style.css" rel="stylesheet" type="text/css">
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/enquire.js/2.1.6/enquire.min.js"></script>-->
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>-->
+        <!--<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.4.2/pixi.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.0.1/vue-router.min.js"></script>-->
+
+
+        <!--<script src="./js/lib/debug.addIndicators.min.js"></script>-->
+
+        <script src="./js/lib/lib.all.js"></script>
+
+        <!--<script src="./js/lib/nanoScroller.js"></script>-->
+<!--        <script src="./js/lib/greensock/minified/plugins/ScrollToPlugin.min.js"></script>
+        <script src="./js/lib/greensock/minified/plugins/MorphSVGPlugin.min.js"></script>
+        <script src="./js/lib/greensock/minified/utils/SplitText.min.js"></script>-->
+
+        <script id="homeShader" type="shader">
+precision mediump float;
+uniform vec2 resolution;
+uniform float myTime;
+uniform float globalTime;
+
+varying vec2 vTextureCoord;//The coordinates of the current pixel
+uniform sampler2D uSampler;//The image data
+uniform sampler2D noise;
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+void main( )
+{
+	float POWER = 0.02;
+
+	vec2 uv = vTextureCoord;
+	float y = (uv.y);
+    float x = (uv.x);
+    
+    int generators = 4;
+    int generatorsY = 4;
+    
+    float minX = 500.0;
+    float maxX = 1200.0;
+    
+    float multiplierXMin = 0.1;
+    float multiplierXMax = 0.4;
+    
+    float multiplierYMin = 2.8;
+    float multiplierYMax = 6.8;
+    
+    float minY = 20.0;
+    float maxY = 200.0;
+    
+    
+    
+    
+    
+    
+    
+    float valX = sin(y);
+    float valY = sin(x);
+    
+    
+    /* X */
+    for(int i=0; i<=(3); i++) {
+        
+		//float rand = noise(1);
+        float r = rand(float(i));
+        
+        
+        float myX = minX + ( (maxX - minX) / float(generators) * float(i) * r );
+        
+        
+        float multiplierX = multiplierXMin + ( (multiplierXMax - multiplierXMin) / float(generators) * float(i) );
+        
+        valX += sin(y * myX) * multiplierX;
+        
+    } 
+    
+    /* Y */
+    for(int i=0; i<=(3); i++) {
+        float r = rand(float(i));
+        
+        float myY = minY + ( (maxY - minY) / float(generatorsY) * float(i) * r );
+        
+        float multiplierY = multiplierYMin + ( (multiplierYMax - multiplierYMin) / float(generatorsY) * float(i) );
+        valY += sin(x * myY) * multiplierY;
+        
+    }
+    
+    valX *= myTime;
+    valX *= POWER;
+    valY *= myTime;
+    valY *= POWER;
+    
+    uv.x += valX;
+    uv.y += valY;
+	gl_FragColor = texture2D(uSampler, uv);
+	
+}        </script>
+
+        <script id="waterShader" type="shader">
+float SCALE = 1.;
+
+precision mediump float;
+uniform vec2 resolution;
+uniform float myTime;
+uniform float globalTime;
+
+varying vec2 vTextureCoord;//The coordinates of the current pixel
+uniform sampler2D uSampler;//The image data
+uniform sampler2D noise;
+
+
+#define ANIM true
+
+// --- noise functions from https://www.shadertoy.com/view/XslGRr
+// Created by inigo quilez - iq/2013
+// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+
+
+
+mat3 m = mat3( 0.00,  0.80,  0.60,
+              -0.80,  0.36, -0.48,
+              -0.60, -0.48,  0.64 );
+
+float hash( float n )
+{
+    return fract(sin(n)*43758.5453);
+}
+
+float mynoise( in vec3 x )
+{
+    vec3 p = floor(x);
+    vec3 f = fract(x);
+
+    f = f*f*(3.0-2.0*f);
+
+    float n = p.x + p.y*57.0 + 113.0*p.z;
+
+    float res = mix(mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),
+                        mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y),
+                    mix(mix( hash(n+113.0), hash(n+114.0),f.x),
+                        mix( hash(n+170.0), hash(n+171.0),f.x),f.y),f.z);
+    return res;
+}
+
+float fbm( vec3 p )
+{
+    float f;
+    f  = 0.5000*mynoise( p ); p = m*p*2.02;
+    f += 0.2500*mynoise( p ); p = m*p*2.03;
+    f += 0.1250*mynoise( p ); p = m*p*2.01;
+    f += 0.0625*mynoise( p ); 
+    return f;
+}
+// --- End of: Created by inigo quilez --------------------
+/*float mynoise ( vec3 p)
+{
+	 return noise(p);
+	 //return .5+.5*sin(50.*noise(p));
+}*/
+float myfbm( vec3 p )
+{
+    float f;
+    f  = 0.5000*mynoise( p ); p = m*p*2.02;
+    f += 0.2500*mynoise( p ); p = m*p*2.03;
+    f += 0.1250*mynoise( p ); p = m*p*2.01;
+    f += 0.0625*mynoise( p ); p = m*p*2.05;
+    f += 0.0625/2.*mynoise( p ); p = m*p*2.02;
+    f += 0.0625/4.*mynoise( p );
+    return f;
+}
+float myfbm2( vec3 p )
+{
+    float f;
+    f  = 1. - 0.5000*mynoise( p ); p = m*p*2.02;
+    f *= 1. - 0.2500*mynoise( p ); p = m*p*2.03;
+    f *= 1. - 0.1250*mynoise( p ); p = m*p*2.01;
+    f *= 1. - 0.0625*mynoise( p ); p = m*p*2.05;
+    f *= 1. - 0.0625/2.*mynoise( p ); p = m*p*2.02;
+    f *= 1. - 0.0625/4.*mynoise( p );
+    return f;
+}
+
+void main( )
+{
+	vec2 uv = vTextureCoord;
+	vec3 v;
+	vec3 p = 4.*vec3(uv,0.)+myTime*(.1,.4,.4);
+	float x = myfbm(p);
+	v = (.5+.5*sin(x*vec3(5.,5.,5.)*SCALE))/SCALE;
+	float g = 1.;
+	v *= g;
+	vec3 Ti = texture2D(uSampler,.02*v.xy+vTextureCoord).rgb;
+	vec3 T=Ti;
+	vec3 T1,T2;
+	T1 = vec3(0.,0.,0.); //T1 *= .5*(T+1.);
+	T2 = vec3(1.,1.,1.); //T2 = 1.2*Ti*vec3(1.,.8,.6)-.2;
+	v = mix(mix(T1,T1,T1),T2,T);
+	gl_FragColor = vec4(v,1.0);
+
+}        </script>
+
+        <script id="textShader" type="shader">
+precision mediump float;
+uniform vec2 resolution;
+uniform float myTime;
+uniform float globalTime;
+
+varying vec2 vTextureCoord;//The coordinates of the current pixel
+uniform sampler2D uSampler;//The image data
+uniform sampler2D noise;
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+void main( )
+{
+	float POWER = 0.02;
+
+	vec2 uv = vTextureCoord;
+	float y = (uv.y);
+    float x = (uv.x);
+    
+    int generators = 4;
+    int generatorsY = 4;
+    
+    float minX = 5.0;
+    float maxX = 200.0;
+    
+    float multiplierXMin = 1.0;
+    float multiplierXMax = 1.0;
+    
+    float multiplierYMin = 2.8;
+    float multiplierYMax = 6.8;
+    
+    float minY = 20.0;
+    float maxY = 200.0;
+    
+    
+    
+    
+    
+    
+    
+    float valX = sin(y);
+    float valY = sin(x);
+    
+    
+    /* X */
+    for(int i=0; i<=(3); i++) {
+        
+		//float rand = noise(1);
+        float r = rand(float(i));
+        
+        
+        float myX = minX + ( (maxX - minX) / float(generators) * float(i) * r );
+        
+        
+        float multiplierX = multiplierXMin + ( (multiplierXMax - multiplierXMin) / float(generators) * float(i) );
+        
+        valX += sin(y * myX) * multiplierX;
+        
+    } 
+    
+    /* Y */
+    for(int i=0; i<=(3); i++) {
+        float r = rand(float(i));
+        
+        float myY = minY + ( (maxY - minY) / float(generatorsY) * float(i) * r );
+        
+        float multiplierY = multiplierYMin + ( (multiplierYMax - multiplierYMin) / float(generatorsY) * float(i) );
+        valY += sin(x * myY) * multiplierY;
+        
+    }
+    
+    valX *= myTime;
+    valX *= POWER;
+    valY *= myTime;
+    valY *= POWER;
+    
+    uv.x += valX;
+    //uv.y += valY;
+	gl_FragColor = texture2D(uSampler, uv);
+	
+}        </script>
+
+        <script>
+
+
+
+            var baseUrl = '/';
+
+            var shader = '';
+        </script>
+
+        <meta name="viewport"
+              content="width=device-width,  initial-scale=1, maximum-scale=1,minimum-scale=1, user-scalable=no" />
+
+
+        <script type="text/x-template" id="loader"><div class="loader state-visible">
+    <div class="textAndLogo">
+
+        <div class="logoLoader">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path  d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path  d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path  d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+
+        </div>
+        <div class="text"><div>l</div><div>o</div><div>a</div><div>d</div><div>i</div><div>n</div><div>g</div><div>.</div><div>.</div><div>.</div></div>
+    </div>
+
+    <div class="loaderBar">
+        <div class="line"></div>
+    </div>
+    <div class="loaderBar">
+        <div class="line"></div>
+    </div>
+    <div class="loaderBar">
+        <div class="line"></div>
+    </div>
+    <div class="loaderBar">
+        <div class="line"></div>
+    </div>
+    <div class="loaderBar">
+        <div class="line"></div>
+    </div>
+</div></script><script type="text/x-template" id="logo">
+
+<div class="logo">
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path  d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path  d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path  d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+
+</div></script><script type="text/x-template" id="menu-main"><div id="menu-main" class="menu-main">
+<!--    <div class="logoMenu logo">
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path class="cls-1" d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path class="cls-1" d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path class="cls-1" d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+
+    </div>-->
+    <div class="menu-desktop-inner">
+        <div class="menuBars">
+            <div class="menuBar">            <div class="line"></div>
+            </div>
+            <div class="menuBar">            <div class="line"></div>
+            </div>
+            <div class="menuBar">            <div class="line"></div>
+            </div>
+            <div class="menuBar">            <div class="line"></div>
+            </div>
+            <div class="menuBar"></div>
+
+        </div>
+        <div class="menuLinks">
+
+            <router-link class="routerLink routerLinkHome" data-menuWidth="455" v-on:click.native="resetSections($event)" to="/Home"><span>home<div class="line"></div></span></router-link>
+            <router-link class="routerLink routerLinkAbout" data-menuWidth="582" v-on:click.native="resetSections($event)" to="/About"><span>about<div class="line"></div></span></router-link>
+            <router-link class="routerLink routerLinkClairty" data-menuWidth="523" v-on:click.native="resetSections($event)" to="/Clarity"><span>clarity<div class="line"></div></span></router-link>
+            <router-link class="routerLink routerLinkContact" data-menuWidth="640" v-on:click.native="resetSections($event)" to="/Contact"><span>contact<div class="line"></div></span></router-link>
+            <router-link class="routerLink routerLinkJoin" data-menuWidth="481" v-on:click.native="resetSections($event)" to="/Join"><span>join<div class="line"></div></span></router-link>
+        </div>
+
+        <div class="externalLinks">
+            <a class="twitterLink" target="blank"  href="https://twitter.com/TStJ?lang=de"><svg xmlns="http://www.w3.org/2000/svg"  version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path d="M612,116.258c-22.525,9.981-46.694,16.75-72.088,19.772c25.929-15.527,45.777-40.155,55.184-69.411    c-24.322,14.379-51.169,24.82-79.775,30.48c-22.907-24.437-55.49-39.658-91.63-39.658c-69.334,0-125.551,56.217-125.551,125.513    c0,9.828,1.109,19.427,3.251,28.606C197.065,206.32,104.556,156.337,42.641,80.386c-10.823,18.51-16.98,40.078-16.98,63.101    c0,43.559,22.181,81.993,55.835,104.479c-20.575-0.688-39.926-6.348-56.867-15.756v1.568c0,60.806,43.291,111.554,100.693,123.104    c-10.517,2.83-21.607,4.398-33.08,4.398c-8.107,0-15.947-0.803-23.634-2.333c15.985,49.907,62.336,86.199,117.253,87.194    c-42.947,33.654-97.099,53.655-155.916,53.655c-10.134,0-20.116-0.612-29.944-1.721c55.567,35.681,121.536,56.485,192.438,56.485    c230.948,0,357.188-191.291,357.188-357.188l-0.421-16.253C573.872,163.526,595.211,141.422,612,116.258z" fill="#FFFFFF"/>
+                        </g>
+                    </g>
+                </svg></a>
+            <a class="instaLink" target="blank"  href="https://www.instagram.com/tstjgroup/"><svg xmlns="http://www.w3.org/2000/svg"  version="1.1" id="Layer_1" x="0px" y="0px"  viewBox="0 0 169.063 169.063" style="enable-background:new 0 0 169.063 169.063;" xml:space="preserve">
+                    <g>
+                        <path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752   c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407   c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752   c17.455,0,31.656,14.201,31.656,31.655V122.407z" fill="#FFFFFF"/>
+                        <path d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561   C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561   c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z" fill="#FFFFFF"/>
+                        <path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78   c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78   C135.661,29.421,132.821,28.251,129.921,28.251z" fill="#FFFFFF"/>
+                    </g>
+                </svg></a>
+            <a class="portalLink" target="blank" href="https://portal.prosystemfx.com/portal"><span>Client Portal</span></a>
+        </div>
+    </div>
+
+</div>
+</script><script type="text/x-template" id="menu-mobile"><div class="menu-mobile">
+    <div class="bg"></div>
+    <!--    <div class="logo logoMenu">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path  d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path  d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path  d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+    
+        </div>-->
+    <div class="menu-icon-container menu-icon-menu">
+        <div class="menu-icon"><div class="bar"></div> <div class="bar"></div> <div class="bar"></div></div>
+    </div>
+    <div class="menu-mobile-inner">
+        <!--        <router-link class="routerLink routerLinkHome" data-menuWidth="455" v-on:click.native="resetSections($event)" to="/Home"><span>home</span><div class="line"></div></router-link>
+                <router-link class="routerLink routerLinkAbout" data-menuWidth="582" v-on:click.native="resetSections($event)" to="/About"><span>about</span><div class="line"></div></router-link>
+                <router-link class="routerLink routerLinkClairty" data-menuWidth="523" v-on:click.native="resetSections($event)" to="/Clarity"><span>clarity</span><div class="line"></div></router-link>
+                <router-link class="routerLink routerLinkContact" data-menuWidth="640" v-on:click.native="resetSections($event)" to="/Contact"><span>contact</span><div class="line"></div></router-link>
+                <router-link class="routerLink routerLinkJoin" data-menuWidth="481" v-on:click.native="resetSections($event)" to="/Join"><span>join</span><div class="line"></div></router-link>-->
+
+        <a class="routerLink routerLinkHome" data-menuWidth="455"    v-on:click="mobileReload('home')" ><span>home</span><div class="line"></div></a>
+        <a class="routerLink routerLinkAbout" data-menuWidth="582"   v-on:click="mobileReload('about')" ><span>about</span><div class="line"></div></a>
+        <a class="routerLink routerLinkClairty" data-menuWidth="523" v-on:click="mobileReload('clarity')" ><span>clarity</span><div class="line"></div></a>
+        <a class="routerLink routerLinkContact" data-menuWidth="640" v-on:click="mobileReload('contact')" ><span>contact</span><div class="line"></div></a>
+        <a class="routerLink routerLinkJoin" data-menuWidth="481"    v-on:click="mobileReload('join')" ><span>join</span><div class="line"></div></a>
+
+
+
+        <a class="portalLink" target="blank" href="https://portal.prosystemfx.com/portal"><span>Client Portal</span></a>
+    </div>
+    <div class="externalLinks">
+        <a class="twitterLink" target="blank"  href="https://twitter.com/TStJ?lang=de"><svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                <g>
+                    <g>
+                        <path d="M612,116.258c-22.525,9.981-46.694,16.75-72.088,19.772c25.929-15.527,45.777-40.155,55.184-69.411    c-24.322,14.379-51.169,24.82-79.775,30.48c-22.907-24.437-55.49-39.658-91.63-39.658c-69.334,0-125.551,56.217-125.551,125.513    c0,9.828,1.109,19.427,3.251,28.606C197.065,206.32,104.556,156.337,42.641,80.386c-10.823,18.51-16.98,40.078-16.98,63.101    c0,43.559,22.181,81.993,55.835,104.479c-20.575-0.688-39.926-6.348-56.867-15.756v1.568c0,60.806,43.291,111.554,100.693,123.104    c-10.517,2.83-21.607,4.398-33.08,4.398c-8.107,0-15.947-0.803-23.634-2.333c15.985,49.907,62.336,86.199,117.253,87.194    c-42.947,33.654-97.099,53.655-155.916,53.655c-10.134,0-20.116-0.612-29.944-1.721c55.567,35.681,121.536,56.485,192.438,56.485    c230.948,0,357.188-191.291,357.188-357.188l-0.421-16.253C573.872,163.526,595.211,141.422,612,116.258z" fill="#FFFFFF"/>
+                    </g>
+                </g>
+            </svg></a>
+        <a class="instaLink" target="blank"  href="https://www.instagram.com/tstjgroup/"><svg version="1.1" id="Layer_1" x="0px" y="0px"  viewBox="0 0 169.063 169.063" style="enable-background:new 0 0 169.063 169.063;" xml:space="preserve">
+                <g>
+                    <path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752   c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407   c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752   c17.455,0,31.656,14.201,31.656,31.655V122.407z" fill="#FFFFFF"/>
+                    <path d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561   C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561   c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z" fill="#FFFFFF"/>
+                    <path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78   c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78   C135.661,29.421,132.821,28.251,129.921,28.251z" fill="#FFFFFF"/>
+                </g>
+            </svg></a>
+        <a class="portalLink" target="blank" href="https://portal.prosystemfx.com/portal"><span>Client Portal</span></a>
+    </div>
+
+
+    <!--	<div v-on:click="toggleMenu()" class="menu-icon">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+            </div>-->
+</div></script><script type="text/x-template" id="menu"><!--<div class="menu-main">
+
+
+	<div class="menu-icon">
+		<div class="bar"></div>
+		<div class="bar"></div>
+		<div class="bar"></div>
+	</div>
+</div>--></script><script type="text/x-template" id="modalTextContainer"><div class="modalContainer" >
+    <div class="bg">
+        <div class="bgSlice bgSlice1 bgSliceFirst"><div class="bgSliceInner"></div></div>
+        <div class="bgSlice bgSlice2"><div class="bgSliceInner"></div></div>
+        <div class="bgSlice bgSlice3"><div class="bgSliceInner"></div></div>
+        <div class="bgSlice bgSlice4"><div class="bgSliceInner"></div></div>
+        <div class="bgSlice bgSlice5 bgSliceLast"><div class="bgSliceInner"></div></div>
+    </div>
+
+    <div class="modalContainerInner">
+        <div class="close closed" v-on:mouseenter="onMouseEnter" v-on:mouseleave="onMouseLeave" @click="modalClose">
+            <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" style="" viewBox="0 0 612 612" x="0px" y="0px" width="20px" height="20px" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve" version="1.1">
+                <g>
+                    <g id="cross">
+                        <g>
+                            <polygon points="612,36.004 576.521,0.603 306,270.608 35.478,0.603 0,36.004 270.522,306.011 0,575.997 35.478,611.397 306,341.411 576.521,611.397 612,575.997 341.459,306.011" />
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+        <div class="modalTextContainer nano">
+            <div class="nano-content">
+
+                <div class="vTop" >
+                    <h2  v-html="modData.OverlayParagraphTop"></h2>
+
+                </div>
+
+                <div class="vCenter">
+
+
+                    <div class="left" v-if="modData.OverlayParagraphLeft" v-html="modData.OverlayParagraphLeft">        </div>
+
+
+                    <div class="right" v-if="modData.OverlayParagraphRight" v-html="modData.OverlayParagraphRight">
+
+                        <!--<p>{{data.OverlayParagraphRight}}</p>-->
+                    </div>
+                </div>
+
+                <div class="vBottom">
+                    <div class="left"></div>
+                    <div class="right largeText" v-if="modData.OverlayParagraphBottom" v-html="modData.OverlayParagraphBottom">
+
+                    </div>
+                </div>
+                <!--</div>-->
+
+                <!--<div class=""></div>-->
+            </div>
+
+        </div>
+
+    </div>
+</div></script><script type="text/x-template" id="page-about-mobile"><section class="page-about page-about-mobile page noMouseWheel" :class="{ stateActive: active }">
+
+<div class="pageScrollHandler pageScrollHandlerHelper">
+	
+</div>
+<div class="page-inner page-about-inner pageScrollHandler">
+	<h1 v-html="">{{data.Headline}}</h1>
+
+
+	<div class="text bold"  v-html="">{{data.Content}}</div>
+
+<!--	<a @click="showModal" :class="{'clicked' :  setClicked}" class="button buttonAbout">
+		want more
+	</a>-->
+    
+     <div class="buttonContainer">
+            <div class="buttonBgInit"></div>
+            <div class="buttonBgHover"></div>
+
+            <a @click="showModal" :class="{'clicked' :  setClicked}" class="button buttonAbout">
+                <span class="initText">want more</span> 
+                <span class="hoverText">want more</span> 
+
+            </a>
+        </div>
+
+</div>
+
+<modalTextContainer :opened="modalOpen" :modData="data">
+
+<!--	<div class="vTop">
+		<h2>For sure, if you need advice, 
+				support and clarity in accounting, 
+				tax and business management, 
+				we know what to do. 
+				And if you need advice, support and real 
+				clarity in complex international accounting, 
+				international tax and international business management, 
+				we know what to do better than anyone. So far so sensible, right? So far, so dull?
+		</h2>
+
+	</div>
+
+	<div class="vCenter">
+		
+		
+		<div class="left">
+			
+
+				<p>
+					Well we don't think so. 
+					We're really fired up about making 
+					Entertainment & Sports better. 
+					About giving artists and entertainers 
+					and sports people real clarity and control 
+					over the business side of their lives. 
+					About making it easy for clients to manage 
+					their money and their financial obligations. 
+					About thinking ahead and freeing our clients 
+					up to do what they do best, whether it's music, 
+					film and tv, sports, or anything else they want 
+					to turn their talents to.
+				</p>
+
+		</div>
+		
+
+		<div class="right">
+
+			<p>
+				Providing clear solutions to complex problems, managing money with absolute integrity, resolving the trickiest tax situations   - that’s where our talents lie, and what we’re passionate about. We think about the bigger picture and we use our expertise to deliver more value to our clients, to give them better support, to communicate better than anyone else can. That clarity makes our clients’ lives better. And makes them better at what they do.
+
+			</p>
+		</div>
+	</div>
+
+	<div class="vBottom">
+		<p class="largeText">
+			Ok, maybe we’re a little sensible. But that’s not dull, it’s exciting. And that’s what makes us Thomas St John Group.
+		</p>
+	</div>-->
+<!--<div class="vTop" >
+        <h2 class="" v-html="data.OverlayParagraphTop"></h2>
+
+    </div>
+
+    <div class="vCenter">
+
+
+        <div class="left" v-html="data.OverlayParagraphLeft">        </div>
+
+
+        <div class="right" v-html="data.OverlayParagraphRight">
+
+            <p>{{data.OverlayParagraphRight}}</p>
+        </div>
+    </div>
+
+    <div class="vBottom">
+        <div class="left"></div>
+        <div class="right largeText"  v-html="data.OverlayParagraphBottom">
+
+            <p class=""></p>
+        </div>
+    </div>-->
+</modalTextContainer>
+
+</section></script><script type="text/x-template" id="page-about"><section class="page-about page-about-desktop page noMouseWheel" :class="{ stateActive: active }">
+
+         <!--<div class="pageScrollHandler pageScrollHandlerHelper">-->
+
+</div>
+<div class="page-inner page-about-inner ">
+    <div class="about-content">
+
+        <h1>{{data.Headline}}</h1>
+<!--<span>Business managers,</span>
+            <span>international accountants,</span>
+            <span>lawyers, tax professionals...</span>
+            <span>and something more</span>-->
+
+<div class="text bold aboutText">
+    <p>{{data.Content}}</p> 
+    <div class="buttonContainer">
+            <div class="buttonBgInit"></div>
+            <div class="buttonBgHover"></div>
+
+            <a @click="showModal" :class="{'clicked' :  setClicked}" class="button buttonAbout">
+                <span class="initText">want more</span> 
+                <span class="hoverText">want more</span> 
+
+            </a>
+        </div></div>
+       
+    </div>
+
+
+</div>
+
+<modalTextContainer :opened="modalOpen" :modData="data">
+    <!--<div class="modalMobile">-->
+
+   
+   
+
+</modalTextContainer>
+
+</section></script><script type="text/x-template" id="page-clarity-mobile"><section class="page-clarity page-clarity-mobile page noMouseWheel" :class="{ stateActive: active,stateVisible: visible }">
+
+
+         <div class="arrowNext">Scroll to next Page</div>
+    <div class="arrowPrev">Scroll to previous Page</div>
+    <div class="page-inner">
+
+
+        <div class="page-item-container">
+            <page-item-mobile v-for="item in data.pageItems" :active="item.SortOrder == data.activePageItemId" :data="item"></page-item-mobile>
+            <div class="scrollInfoClarity"><p>Continue scrolling</p><p>to proceed to <span >contact</span></p></div>
+
+        </div>
+    </div>
+
+
+</section></script><script type="text/x-template" id="page-clarity"><section class="page-clarity page-clarity-desktop page noMouseWheel" :class="{ stateActive: active }">
+
+	<!--{{data.activePageItemId}}-->
+
+	<div class="arrowNext">Scroll to next Page</div>
+	<div class="arrowPrev">Scroll to previous Page</div>
+
+	<div class="page-inner">
+		<div class="page-item-container">
+			<!--<div v-for="item in data.pageItems" class="page-item">
+
+			</div>-->
+			<page-item v-for="item in data.pageItems" :active="item.SortOrder == data.activePageItemId" :revertPageItems="data.revertPageItems" :data="item"></page-item>
+                </div>
+                        <div class="scrollInfoClarity">Continue scrolling to proceed to <span>contact</span></div>
+	</div>
+</section></script><script type="text/x-template" id="page-contact-item"><div class="page-inner-container" :class="data.cityIdentifier +'Container'  " >
+    <h2 v-html="data.Title" :class="data.cityIdentifier  "></h2>
+    <div class="contactItemContent">
+
+        <div class="text">
+            <!--<div class="line"  v-html="data.Address"></div>-->
+            <div class="line"  v-if="data.AddressLine1">{{data.AddressLine1}}</div>
+            <div class="line"  v-if="data.AddressLine2">{{data.AddressLine2}}</div>
+            <div class="line"  v-if="data.AddressLine3">{{data.AddressLine3}}</div>
+
+
+            <div class="line"  >T: {{data.Phone}}</div>
+            <div class="line"  v-if="data.Telefax">F: {{data.Telefax}}</div>
+            <div class="line"  ><a :href="'mailto:'+data.Mail">E: {{data.Mail}}</a></div>
+            <!--<a class="button buttonOpenMap" :href="data.ButtonLink" target="blank"  v-html="data.ButtonText">-->
+
+            <!--</a>-->
+
+            <!--        <div class="buttonContainer">
+                       <div class="buttonBg"></div>
+                       <a class="button buttonOpenMap" :href="data.ButtonLink" target="blank"  ><span v-html="data.ButtonText"></span></a>
+                    </div>-->
+
+        </div>
+        <div class="buttonContainer">
+            <div class="buttonBgInit"></div>
+            <div class="buttonBgHover"></div>
+
+            <a class="button buttonOpenMap" :href="data.ButtonLink" target="blank"  >
+
+                <span class="initText" v-html="data.ButtonText"></span> 
+                <span class="hoverText" v-html="data.ButtonText"></span> 
+
+            </a>
+        </div>
+    </div>
+</div>
+</script><script type="text/x-template" id="page-contact"><section class="page-contact page-contact-desktop page " :class="{ stateActive: active, noMouseWheel: mobileOrDesktop() }">
+
+<div class="menu-contact">
+	<a class="menu-contact-item"><span>London</span></a>
+	<a class="menu-contact-item"><span>Los Angeles</span></a>
+	<a class="menu-contact-item"><span>Amsterdam</span></a>
+	<!--<a class="menu-contact-item"><span>New York</span></a>-->
+</div>
+
+<div class="page-inner">
+    
+	
+
+    			<page-contact-item v-for="item in data.pageItems"  :data="item"></page-contact-item>
+
+<!--	<div class="page-inner-container">
+            
+		<h2>London</h2>
+		<div class="text">
+			<div class="line mobile">30 Market Place, </div>
+			<div class="line mobile">London, W1W 8AP. UK.</div>
+                        <div class="line desktop">30 Market Place, London, W1W 8AP. UK.</div>
+			<div class="line desktop"></div>
+			<div class="line">T  +44 (0) 20 3388 0288</div>
+			<div class="line">F  +44 (0) 20 3388 0299</div>
+			<div class="line">info@thomasstjohn.com</div>
+		<a class="button buttonOpenMap">
+			open map
+		</a>
+		</div>
+	</div>
+	<div class="page-inner-container">
+		<h2>Los Angeles</h2>
+		<div class="text">
+			<div class="line">30 Market Place, </div>
+			<div class="line">London, W1W 8AP. UK.</div>
+			<div class="line">T  +44 (0) 20 3388 0288</div>
+			<div class="line">F  +44 (0) 20 3388 0299</div>
+			<div class="line">info@thomasstjohn.com</div>
+		<a class="button buttonOpenMap">
+			open map
+		</a>
+		</div>
+	</div>
+	<div class="page-inner-container">
+		<h2>Amsterdam</h2>
+		<div class="text">
+			<div class="line">30 Market Place, </div>
+			<div class="line">London, W1W 8AP. UK.</div>
+			<div class="line">T  +44 (0) 20 3388 0288</div>
+			<div class="line">F  +44 (0) 20 3388 0299</div>
+			<div class="line">info@thomasstjohn.com</div>
+		<a class="button buttonOpenMap">
+			open map
+		</a>
+		</div>
+	</div>
+	<div class="page-inner-container">
+		<h2>New York</h2>
+		<div class="text">
+			<div class="line">30 Market Place, </div>
+			<div class="line">London, W1W 8AP. UK.</div>
+			<div class="line">T  +44 (0) 20 3388 0288</div>
+			<div class="line">F  +44 (0) 20 3388 0299</div>
+			<div class="line">info@thomasstjohn.com</div>
+		<a class="button buttonOpenMap">
+			open map
+		</a>
+		</div>
+	</div>-->
+</div>
+
+
+</section></script><script type="text/x-template" id="page-home-mobile"><section class="page-home-mobile page noMouseWheel" :class="{ stateActive: active }">
+
+         <div class="headLine1">complexity</div>
+
+    <div class="headLine2">becomes clarity.</div>
+    <div class="shaderStage">
+
+    </div>
+
+    <div class="mobileImages">
+        <div class="clarity">
+<!--            <video playsinline paused muted loop  id="clarityVid">
+                <source src="./videos/clarity_video_cc1.mp4" type="video/mp4">
+            </video>-->
+        </div>
+        <div class="complexity">
+<!--             <video playsinline autoplay muted loop id="complexityVid">
+                <source src="./videos/complexity_video_cc1.mp4" type="video/mp4">
+            </video>-->
+        </div>
+    </div>
+    <!--<div class="textStage">
+    <video width="320" height="240" controls>
+<source src="../videos/tsj_final_video_dasp_cloudconvert.mp4" type="video/mp4">
+Your browser does not support the <code>video</code> tag.
+</video> 
+    </div>-->
+
+    <div class="textContainerHeadline txtComplexity">complexity</div>
+
+    <div class="textContainerHeadline txtClarity"><div class="line1">becomes</div><div class="line2">clarity</div></div>
+    <!--<div class="textClarity"></div>-->
+
+
+
+    <div class="textContainer">
+        <p>Solving complex problems, managing money with absolute integrity, and resolving the trickiest of tax situations, to give our clients clarity and control. That's where our talents lie. And that's what we are passionate about.</p>
+        <!--<button @click="showModal"><span>more info</span></button>-->
+    </div>
+
+
+    <aside>
+        <!--<svg class="swipeInfoSvg" viewBox="0 0 8 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" ><g><rect x="3.5" y="0" width="1" height="50" style="fill:#fff;"/><path d="M0.818,46.586l-0.707,0.707l3.889,3.889l0.707,-0.707l-3.889,-3.889Z" style="fill:#fff;"/><path d="M7.889,47.293l-0.707,-0.707l-3.889,3.889l0.707,0.707l3.889,-3.889Z" style="fill:#fff;"/></g></svg>-->
+        <img class="swipeGif" src="./images/swipe_big.gif">
+        <!--<span class="swipeInfoText">swipe</span>-->
+    </aside>
+    <!--<modalTextContainer :opened="modalOpen"></modalTextContainer>-->
+
+
+</section>
+</script><script type="text/x-template" id="page-home"><section class="page-home page noMouseWheel" :class="{ stateActive: active }">
+
+         <div class="headLine1">Complexity</div>
+    <div class="headLine2">becomes clarity.</div>
+    <img class="shaderFallbackImg" src="./images/distortion_interim_02_tiny.jpg" />
+    <div class="shaderStage">
+
+    </div>
+
+    <div class="mobileImages">
+        <div class="clarity"></div>
+        <div class="complexity"></div>
+    </div>
+    <!--<div class="textStage">
+
+    </div>-->
+
+    <div class="textContainerHeadline">
+        <svg  width="100%" height="100%" viewBox="0 0 1500 275" version="1.1" xmlns="http://www.w3.org/2000/svg"  xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;"><rect id="Artboard1" x="0" y="0" width="1500" height="274.4" style="fill:none;"/><clipPath id="_clip1"><rect x="0" y="0" width="1500" height="274.4"/></clipPath><g clip-path="url(#_clip1)">
+                <path id="complexity" d="M653.512,80.517c10.416,-16.825 27.575,-24.472 47.185,-24.472c49.61,0 71.947,40.083 71.947,85.12c0,42.279 -23.255,81.751 -69.495,81.751c-18.998,0 -37.076,-8.26 -47.494,-23.86l-0.613,0l0,75.31l-43.45,0l0,-214.034l41.308,0l0,20.185l0.612,0Zm609.178,8.871l-26.338,0l0,-29.056l26.338,0l0,-47.469l43.45,0l0,47.469l31.277,0l0,0l46.54,0l35.824,108.415l0.612,0l34.599,-108.415l45.008,0l-66.135,178.241c-9.492,25.392 -24.495,35.793 -54.501,35.793c-8.879,0 -17.759,-0.611 -26.638,-1.529l0,-35.795c8.267,0.612 16.84,1.837 25.413,1.531c15.003,-1.531 19.902,-17.15 15.003,-29.707l-55.151,-147.003l0,27.525l-31.851,0l0,78.433c0,14.706 3.675,18.382 18.376,18.382c4.594,0 8.881,-0.306 13.475,-1.225l0,33.958c-7.35,1.224 -16.844,1.53 -25.419,1.53c-26.627,0 -49.882,-6.119 -49.882,-37.633l0,-93.445Zm-1106.54,68.627c-5.513,41.959 -34.607,64.901 -76.258,64.901c-47.766,0 -79.894,-33.651 -79.894,-81.138c0,-49.326 29.374,-85.733 80.813,-85.733c37.363,0 71.664,19.577 74.42,59.997l-42.569,0c-2.757,-17.769 -14.088,-27.266 -32.157,-27.266c-27.869,0 -37.057,28.186 -37.057,51.47c0,22.671 8.881,49.939 36.138,49.939c20.213,0 31.85,-12.868 34.607,-32.17l41.957,0Zm10.451,-18.382c0,50.245 32.128,83.283 81.751,83.283c49.929,0 82.057,-33.038 82.057,-83.283c0,-50.551 -32.128,-83.588 -82.057,-83.588c-49.623,0 -81.751,33.037 -81.751,83.588Zm840.02,30.013c-12.251,37.363 -38.282,53.27 -74.114,53.27c-49.909,0 -80.813,-34.264 -80.813,-83.287c0,-47.48 32.74,-83.584 80.813,-83.584c53.901,0 79.933,45.302 76.87,93.982l-114.233,0c1.225,27.589 14.7,40.158 38.894,40.158c17.457,0 31.544,-10.729 34.301,-20.539l38.282,0Zm-620.472,-87.905c11.337,-16.213 27.886,-25.696 48.419,-25.696c19.903,0 37.65,7.342 46.218,26.308c9.184,-13.766 25.733,-26.308 47.799,-26.308c33.681,0 57.854,15.601 57.854,56.619l0,105.964l-43.45,0l0,-89.733c0,-21.131 -1.839,-38.588 -26.663,-38.588c-24.517,0 -29.114,20.213 -29.114,40.119l0,88.202l-43.45,0l0,-88.814c0,-18.375 1.224,-39.507 -26.356,-39.507c-8.581,0 -29.421,5.513 -29.421,36.444l0,91.877l-43.45,0l0,-158.296l41.002,0l0,21.409l0.612,0Zm404.6,-81.741l43.45,0l0,218.628l-43.45,0l0,-218.628Zm301.03,101.487l27.557,-41.155l48.071,0l-52.052,73.774l58.481,84.522l-49.601,0l-33.068,-50.103l-33.068,50.103l-48.684,0l56.951,-83.608l-52.052,-74.688l49.602,0l27.863,41.155Zm90.671,-41.155l43.45,0l0,158.296l-43.45,0l0,-158.296Zm-972.399,79.301c0,-25.429 8.886,-50.857 38.301,-50.857c29.722,0 38.607,25.428 38.607,50.857c0,25.123 -8.885,50.552 -38.607,50.552c-29.415,0 -38.301,-25.429 -38.301,-50.552Zm481.452,50.552c-28.19,0 -37.993,-24.51 -37.993,-50.245c0,-25.736 9.19,-51.164 37.687,-51.164c27.883,0 37.995,26.041 37.995,51.164c0,25.735 -9.192,50.245 -37.689,50.245Zm274.386,-67.683c-3.982,-22.075 -13.476,-33.726 -34.607,-33.726c-27.563,0 -35.526,21.462 -36.138,33.726l70.745,0Zm216.561,-122.502l43.45,0l0,35.794l-43.45,0l0,-35.794Z" style="fill:#fff;"/>
+                <path id="complexity2" d="M653.512,80.517c10.416,-16.825 27.575,-24.472 47.185,-24.472c49.61,0 71.947,40.083 71.947,85.12c0,42.279 -23.255,81.751 -69.495,81.751c-18.998,0 -37.076,-8.26 -47.494,-23.86l-0.613,0l0,75.31l-43.45,0l0,-214.034l41.308,0l0,20.185l0.612,0Zm609.178,8.871l-26.338,0l0,-29.056l26.338,0l0,-47.469l43.45,0l0,47.469l31.277,0l0,0l46.54,0l35.824,108.415l0.612,0l34.599,-108.415l45.008,0l-66.135,178.241c-9.492,25.392 -24.495,35.793 -54.501,35.793c-8.879,0 -17.759,-0.611 -26.638,-1.529l0,-35.795c8.267,0.612 16.84,1.837 25.413,1.531c15.003,-1.531 19.902,-17.15 15.003,-29.707l-55.151,-147.003l0,27.525l-31.851,0l0,78.433c0,14.706 3.675,18.382 18.376,18.382c4.594,0 8.881,-0.306 13.475,-1.225l0,33.958c-7.35,1.224 -16.844,1.53 -25.419,1.53c-26.627,0 -49.882,-6.119 -49.882,-37.633l0,-93.445Zm-1106.54,68.627c-5.513,41.959 -34.607,64.901 -76.258,64.901c-47.766,0 -79.894,-33.651 -79.894,-81.138c0,-49.326 29.374,-85.733 80.813,-85.733c37.363,0 71.664,19.577 74.42,59.997l-42.569,0c-2.757,-17.769 -14.088,-27.266 -32.157,-27.266c-27.869,0 -37.057,28.186 -37.057,51.47c0,22.671 8.881,49.939 36.138,49.939c20.213,0 31.85,-12.868 34.607,-32.17l41.957,0Zm10.451,-18.382c0,50.245 32.128,83.283 81.751,83.283c49.929,0 82.057,-33.038 82.057,-83.283c0,-50.551 -32.128,-83.588 -82.057,-83.588c-49.623,0 -81.751,33.037 -81.751,83.588Zm840.02,30.013c-12.251,37.363 -38.282,53.27 -74.114,53.27c-49.909,0 -80.813,-34.264 -80.813,-83.287c0,-47.48 32.74,-83.584 80.813,-83.584c53.901,0 79.933,45.302 76.87,93.982l-114.233,0c1.225,27.589 14.7,40.158 38.894,40.158c17.457,0 31.544,-10.729 34.301,-20.539l38.282,0Zm-620.472,-87.905c11.337,-16.213 27.886,-25.696 48.419,-25.696c19.903,0 37.65,7.342 46.218,26.308c9.184,-13.766 25.733,-26.308 47.799,-26.308c33.681,0 57.854,15.601 57.854,56.619l0,105.964l-43.45,0l0,-89.733c0,-21.131 -1.839,-38.588 -26.663,-38.588c-24.517,0 -29.114,20.213 -29.114,40.119l0,88.202l-43.45,0l0,-88.814c0,-18.375 1.224,-39.507 -26.356,-39.507c-8.581,0 -29.421,5.513 -29.421,36.444l0,91.877l-43.45,0l0,-158.296l41.002,0l0,21.409l0.612,0Zm404.6,-81.741l43.45,0l0,218.628l-43.45,0l0,-218.628Zm301.03,101.487l27.557,-41.155l48.071,0l-52.052,73.774l58.481,84.522l-49.601,0l-33.068,-50.103l-33.068,50.103l-48.684,0l56.951,-83.608l-52.052,-74.688l49.602,0l27.863,41.155Zm90.671,-41.155l43.45,0l0,158.296l-43.45,0l0,-158.296Zm-972.399,79.301c0,-25.429 8.886,-50.857 38.301,-50.857c29.722,0 38.607,25.428 38.607,50.857c0,25.123 -8.885,50.552 -38.607,50.552c-29.415,0 -38.301,-25.429 -38.301,-50.552Zm481.452,50.552c-28.19,0 -37.993,-24.51 -37.993,-50.245c0,-25.736 9.19,-51.164 37.687,-51.164c27.883,0 37.995,26.041 37.995,51.164c0,25.735 -9.192,50.245 -37.689,50.245Zm274.386,-67.683c-3.982,-22.075 -13.476,-33.726 -34.607,-33.726c-27.563,0 -35.526,21.462 -36.138,33.726l70.745,0Zm216.561,-122.502l43.45,0l0,35.794l-43.45,0l0,-35.794Z" style="fill:#fff;"/>
+                <path id="becomes" d="M1420.14,177.619l0.412,0l23.256,-72.871l30.252,0l-44.453,119.805c-6.38,17.067 -16.464,24.058 -36.632,24.058c-5.969,0 -11.937,-0.411 -17.905,-1.028l0,-24.06c5.556,0.412 11.319,1.235 17.081,1.03c10.085,-1.03 13.377,-11.528 10.085,-19.968l-37.456,-99.837l31.282,0l24.078,72.871Zm-1086.9,-7.213c-3.706,28.202 -23.261,43.622 -51.257,43.622c-32.106,0 -53.701,-22.617 -53.701,-54.536c0,-33.155 19.744,-57.626 54.319,-57.626c25.113,0 48.168,13.159 50.021,40.328l-28.613,0c-1.853,-11.944 -9.469,-18.328 -21.614,-18.328c-18.732,0 -24.908,18.945 -24.908,34.596c0,15.239 5.97,33.566 24.29,33.566c13.586,0 21.409,-8.649 23.261,-21.622l28.202,0Zm-114.659,7.817c-8.234,25.114 -25.731,35.805 -49.815,35.805c-33.546,0 -54.319,-23.03 -54.319,-55.981c0,-31.914 22.007,-56.181 54.319,-56.181c36.229,0 53.727,30.45 51.668,63.17l-76.782,0c0.824,18.544 9.881,26.992 26.143,26.992c11.733,0 21.202,-7.211 23.055,-13.805l25.731,0Zm870.952,-40.765l-29.21,0c1.645,-27.369 26.12,-35.592 50.014,-35.592c21.21,0 46.713,4.728 46.713,30.238l0,55.393c0,9.673 1.029,19.333 3.705,23.65l-29.62,0c-1.028,-3.289 -1.851,-6.783 -2.056,-10.276c-9.267,9.663 -22.862,13.157 -35.838,13.157c-20.166,0 -36.209,-10.073 -36.209,-31.885c0,-24.093 18.099,-29.858 36.209,-32.33c17.92,-2.677 34.604,-2.059 34.604,-14.002c0,-12.561 -8.651,-14.415 -18.95,-14.415c-11.123,0 -18.332,4.53 -19.362,16.062Zm-81.107,32.948c-3.705,28.202 -23.261,43.622 -51.256,43.622c-32.106,0 -53.701,-22.617 -53.701,-54.536c0,-33.155 19.744,-57.626 54.318,-57.626c25.114,0 48.169,13.159 50.022,40.328l-28.613,0c-1.853,-11.944 -9.469,-18.328 -21.615,-18.328c-18.732,0 -24.907,18.945 -24.907,34.596c0,15.239 5.969,33.566 24.29,33.566c13.586,0 21.408,-8.649 23.261,-21.622l28.201,0Zm-270.074,7.817c-8.234,25.114 -25.732,35.805 -49.816,35.805c-33.546,0 -54.319,-23.03 -54.319,-55.981c0,-31.914 22.007,-56.181 54.319,-56.181c36.229,0 53.727,30.45 51.668,63.17l-76.782,0c0.824,18.544 9.881,26.992 26.143,26.992c11.734,0 21.203,-7.211 23.055,-13.805l25.732,0Zm-709.152,-60.525l0.412,0c7.209,-10.897 20.39,-15.832 33.571,-15.832c21.205,0 44.034,17.066 44.034,55.978c0,39.119 -22.829,56.184 -44.034,56.184c-15.653,0 -28.628,-4.728 -35.012,-16.448l-0.411,0l0,13.567l-27.765,0l0,-146.951l29.205,0l0,53.502Zm311.064,40.352c0,33.772 21.595,55.978 54.949,55.978c33.56,0 55.155,-22.206 55.155,-55.978c0,-33.978 -21.595,-56.184 -55.155,-56.184c-33.354,0 -54.949,22.206 -54.949,56.184Zm433.703,18.533c0.206,12.768 10.912,17.915 22.447,17.915c8.446,0 19.157,-3.294 19.157,-13.59c0,-8.855 -12.153,-11.944 -33.164,-16.474c-16.872,-3.707 -33.737,-9.678 -33.737,-28.417c0,-27.161 23.446,-34.151 46.302,-34.151c23.273,0 44.662,7.812 46.924,33.945l-27.767,0c-0.824,-11.326 -9.475,-14.415 -19.981,-14.415c-6.592,0 -16.273,1.236 -16.273,9.884c0,10.503 16.479,11.944 33.164,15.856c17.078,3.913 33.737,10.091 33.737,29.859c0,27.988 -24.269,37.033 -48.568,37.033c-24.709,0 -48.773,-9.251 -50.008,-37.445l27.767,0Zm567.73,-103.742l0,31.907l21.408,0l0,19.53l-21.408,0l0,52.718c0,9.885 2.47,12.356 12.351,12.356c3.087,0 5.969,-0.206 9.057,-0.823l0,22.825c-4.94,0.822 -11.322,1.028 -17.085,1.028c-17.897,0 -33.528,-4.113 -33.528,-25.295l0,-62.809l-17.703,0l0,-19.53l17.703,0l0,-31.907l29.205,0Zm-89.313,31.907l29.205,0l0,106.399l-29.205,0l0,-106.399Zm-764.55,14.39c7.62,-10.898 18.743,-17.272 32.544,-17.272c13.379,0 25.307,4.935 31.066,17.683c6.173,-9.252 17.297,-17.683 32.128,-17.683c22.638,0 38.886,10.487 38.886,38.057l0,71.224l-29.205,0l0,-60.314c0,-14.204 -1.236,-25.937 -17.921,-25.937c-16.479,0 -19.569,13.586 -19.569,26.966l0,59.285l-29.205,0l0,-59.697c0,-12.351 0.823,-26.554 -17.715,-26.554c-5.768,0 -19.775,3.705 -19.775,24.496l0,61.755l-29.205,0l0,-106.399l27.559,0l0,14.39l0.412,0Zm711.827,5.35c5.352,-13.367 19.761,-22.622 33.965,-22.622c2.058,0 4.528,0.411 6.381,1.029l0,27.147c-2.676,-0.618 -6.999,-1.029 -10.498,-1.029c-21.409,0 -28.819,15.438 -28.819,34.182l0,47.952l-29.205,0l0,-106.399l27.765,0l0,19.74l0.411,0Zm-180.093,-60.292l29.205,0l0,146.951l-29.205,0l0,-146.951Zm480.427,115.275l0,31.676l-32.293,0l0,-31.676l32.293,0Zm-372.15,-9.477c0,6.383 -0.824,24.504 -23.687,24.504c-9.476,0 -17.921,-2.676 -17.921,-13.59c0,-10.708 8.24,-13.797 17.303,-15.65c9.063,-1.648 19.362,-1.854 24.305,-6.178l0,10.914Zm-1049.83,-11.944c0,17.71 -7.62,33.978 -24.921,33.978c-17.3,0 -24.92,-16.268 -24.92,-33.978c0,-17.916 7.62,-34.184 24.92,-34.184c17.301,0 24.921,16.268 24.921,34.184Zm291.457,0c0,-17.092 5.973,-34.184 25.744,-34.184c19.978,0 25.95,17.092 25.95,34.184c0,16.886 -5.972,33.978 -25.95,33.978c-19.771,0 -25.744,-17.092 -25.744,-33.978Zm-178.265,-11.514c-2.677,-14.838 -9.058,-22.67 -23.261,-22.67c-18.527,0 -23.879,14.426 -24.291,22.67l47.552,0Zm519.77,0c-2.676,-14.838 -9.058,-22.67 -23.261,-22.67c-18.527,0 -23.879,14.426 -24.291,22.67l47.552,0Zm541.41,-82.34l29.205,0l0,24.058l-29.205,0l0,-24.058Z" style="fill:#fff;"/></g></svg>
+
+    </div>
+    <div class="textClarity"></div>
+
+    <aside class="scrollInfo">
+        <!--<svg width="100%" height="100%" viewBox="0 0 8 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;"><g><rect x="3.5" y="0" width="1" height="50" style="fill:#fff;"/><path d="M0.818,46.586l-0.707,0.707l3.889,3.889l0.707,-0.707l-3.889,-3.889Z" style="fill:#fff;"/><path d="M7.889,47.293l-0.707,-0.707l-3.889,3.889l0.707,0.707l3.889,-3.889Z" style="fill:#fff;"/></g></svg>-->
+        <svg version="1.1" id="Capa_1" width="100%" height="100%" viewBox="0 0 3 13"  xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;"><rect id="Artboard1" x="0" y="0" width="2.64" height="12.48" style="fill:none;"/><g><path d="M1.08,11.535l0,-11.535l0.48,0l0,11.535l0.693,-0.694l0.34,0.34l-1.273,1.272l-0.17,-0.169c0,0 -1.103,-1.103 -1.103,-1.103l0.34,-0.34l0.693,0.694Z" style="fill:#fff;"/></g>
+
+        </svg>
+        <span>scroll</span>
+    </aside>
+
+
+    <div class="textContainer">
+        <p>Solving complex problems, managing money with absolute integrity, and resolving the trickiest of tax situations, to give our clients clarity and control. That's where our talents lie. And that's what we're passionate about.</p>
+        <!--<button @click="showModal"><span>more info</span></button>-->
+    </div>
+
+    <modalTextContainer :opened="modalOpen"></modalTextContainer>
+
+
+</section>
+</script><script type="text/x-template" id="page-item-join-mobile"><div :data-id="data.SortOrder" class="page-item page-item-mobile" :class="data.Layout">
+	<div class="vWord">{{data.Vword}}</div>
+	<div class="page-item-inner">
+
+
+		<!--<div v-if="data.image" class="page-item-image">
+			<img :src="data.image" />
+		</div>-->
+
+
+		<div class="page-item-headline">
+			<h1 v-html="data.Headline"></h1>
+			<!--<span v-if="data.headlineSub" class="headline-sub">{{data.headlineSub}}</span>-->
+                        <div v-if="data.AdditionalHeadline" v-html="data.AdditionalHeadline" class="headlineSub"></div>
+		</div>
+
+		<div v-html="data.FullText" class="page-item-content">
+
+		</div>
+
+       <div class="buttonContainer" v-if="data.Mail">
+            <div class="buttonBgInit"></div>
+            <!--<div class="buttonBgHover"></div>-->
+
+            <a :href="'mailto:'+data.Mail" class="button buttonJoin">
+                <span class="initTextMobile">Submit Resume</span> 
+
+            </a>
+        </div>
+	
+                        <h3 v-if="data.Layout == 'top' || data.Layout == 'bottom' "><span>{{index}}</span> / {{amountEntries-1}}</h3>
+
+        </div>
+	
+</div></script><script type="text/x-template" id="page-item-join">
+
+<div :data-id="data.SortOrder" :id="'itemNr_'+data.SortOrder" class="page-item" :class="data.Layout">
+    <div class="vWord">{{data.Vword}}</div>
+    <div class="page-item-inner" >
+
+
+        <!--<div v-if="data.image" class="page-item-image">
+                <img :src="data.image" />
+        </div>-->
+
+
+        <div class="page-item-headline">
+            <h1 v-html="data.Headline"></h1>
+            <h2 v-html="data.AdditionalHeadline"></h2> 
+
+            <!--<span v-if="data.headlineSub" class="headlineSub">{{data.headlineSub}}</span>-->
+        </div>
+
+        <div v-html="data.FullText" class="page-item-content">
+
+        </div>
+
+        <!--        <div class="buttonContainer">
+                    <a v-if="data.Mail" class="button">
+        
+                        {{data.button}} 
+                    </a>
+                </div>-->
+
+        <div class="buttonContainer" v-if="data.Mail">
+            <div class="buttonBgInit"></div>
+            <div class="buttonBgHover"></div>
+
+            <a :href="'mailto:'+data.Mail" class="button buttonJoin">
+                <span class="initText">Submit Resume</span> 
+                <span class="hoverText">Submit Resume</span> 
+
+            </a>
+        </div>
+        
+        <h3 v-if="data.Layout == 'top' || data.Layout == 'bottom' "><span>{{index}}</span> / {{amountEntries-1}}</h3>
+
+    </div>
+    <!--        <div class="page-item-inner" v-if="data.Layout === 'bottom'">
+    
+    
+                    <div v-if="data.image" class="page-item-image">
+                            <img :src="data.image" />
+                    </div>
+    
+    
+    
+                    <div v-html="data.FullText" class="page-item-content">
+    
+                    </div>
+    
+                    <div class="buttonContainer">
+                    <a v-if="data.button" class="button">
+                            {{data.button}}
+                    </a>
+                    </div>
+                    <div class="page-item-headline">
+                            <h1 v-html="data.Headline"></h1>
+                            <h2 v-html="data.AdditionalHeadline"></h2>
+    
+                            <span v-if="data.headlineSub" class="headlineSub">{{data.headlineSub}}</span>
+                    </div>
+            </div>-->
+
+</div></script><script type="text/x-template" id="page-item-mobile"><div :data-id="data.SortOrder" class="page-item page-item-mobile" :class="data.Layout">
+	<div class="vWord">{{data.Vword}}</div>
+	<div class="page-item-inner">
+
+
+		<!--<div v-if="data.image" class="page-item-image">
+			<img :src="data.image" />
+		</div>-->
+
+
+		<div class="page-item-headline">
+			<h1 v-html="data.Headline"></h1>
+			<div v-if="data.AdditionalHeadline" v-html="data.AdditionalHeadline" class="headlineSub"></div>
+		</div>
+
+		<div v-html="data.FullText" class="page-item-content">
+
+		</div>
+
+        <div class="buttonContainer" v-if="data.Mail">
+            <div class="buttonBgInit"></div>
+            <div class="buttonBgHover"></div>
+
+            <a :href="'mailto:'+data.Mail" class="button buttonJoin">
+                <span class="initTextMobile">Submit Resume</span> 
+
+            </a>
+        </div>
+	</div>
+	
+</div></script><script type="text/x-template" id="page-item">
+
+<div :data-id="data.SortOrder" :id="'itemNr_'+data.SortOrder" class="page-item" :class="data.Layout">
+	<div class="vWord">{{data.Vword}}</div>
+	<div class="page-item-inner" v-if="data.Layout == 'top' || data.Layout == 'first'">
+
+
+		<!--<div v-if="data.image" class="page-item-image">
+			<img :src="data.image" />
+		</div>-->
+
+
+		<div class="page-item-headline">
+			<h1 v-html="data.Headline"></h1>
+                        <h2 v-if="data.AdditionalHeadline" v-html="data.AdditionalHeadline"></h2> 
+
+			<!--<span v-if="data.headlineSub" class="headlineSub">{{data.headlineSub}}</span>-->
+		</div>
+
+		<div v-html="data.FullText" class="page-item-content">
+
+		</div>
+
+		
+	</div>
+        <div class="page-item-inner" v-if="data.Layout === 'bottom'">
+
+
+		<!--<div v-if="data.image" class="page-item-image">
+			<img :src="data.image" />
+		</div>-->
+
+
+
+		<div v-html="data.FullText" class="page-item-content">
+
+		</div>
+
+		
+		<div class="page-item-headline">
+			<h1 v-html="data.Headline"></h1>
+                        <h2 v-if="data.AdditionalHeadline" v-html="data.AdditionalHeadline"></h2>
+
+			<!--<span v-if="data.headlineSub" class="headlineSub">{{data.headlineSub}}</span>-->
+		<!--</div>-->
+	</div>
+	
+</div></script><script type="text/x-template" id="page-join-mobile"><section class="page-join page-join-mobile page noMouseWheel scrollpage" :class="{ stateActive: active,stateVisible: visible }">
+
+
+	<div class="arrowNext">Scroll to next Page</div>
+	<div class="arrowPrev">Scroll to previous Page</div>
+
+	<div class="page-inner">
+		<div class="page-item-container">
+			<page-item-join-mobile v-for="(item, index) in data.pageItems" :active="item.SortOrder == data.activePageItemId" :data="item" :index="index" :amountEntries="data.pageItems.length"></page-item-mobile>
+		</div>
+	</div>
+</section></script><script type="text/x-template" id="page-join"><section class="page-join page-join-desktop page noMouseWheel" :class="{ stateActive: active }">
+
+	
+
+<div class="page-inner">
+		<div class="page-item-container">
+			<!--<div v-for="item in data.pageItems" class="page-item">
+
+			</div>-->
+			<page-item-join v-for="(item , index) in data.pageItems" :active="item.SortOrder == data.activePageItemId" :revertPageItems="data.revertPageItems" :index="index" :amountEntries="data.pageItems.length" :data="item"></page-item-join>
+		</div>
+	</div>
+
+</section></script>
+        <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
+        <title>Thomas St. John</title>
+    </head>
+    <body> 
+        <div id="app">
+
+            <header>
+                <nav>
+
+                </nav>
+
+            </header>
+
+            <div class="usePortrait">
+                <svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 201"><defs><style>.cls-1{fill:white;}</style></defs><title>no_landscape</title><path class="cls-1" d="M199,107.23v-.66h-.32A12,12,0,0,0,188,100H106v-.74h-2V100H12A12,12,0,0,0,0,112v77a12,12,0,0,0,12,12H188a12,12,0,0,0,12-12V112A11.88,11.88,0,0,0,199,107.23ZM12,157.75A2.26,2.26,0,0,1,9.75,160h-.5A2.26,2.26,0,0,1,7,157.75v-14.5A2.26,2.26,0,0,1,9.25,141h.5A2.26,2.26,0,0,1,12,143.25ZM10,115a3,3,0,1,1,3-3A3,3,0,0,1,10,115Zm158,76.5a1.5,1.5,0,0,1-1.5,1.5H21.5a1.5,1.5,0,0,1-1.5-1.5v-81a1.5,1.5,0,0,1,1.5-1.5h145a1.5,1.5,0,0,1,1.5,1.5ZM183.5,159a8.5,8.5,0,1,1,8.5-8.5A8.5,8.5,0,0,1,183.5,159Z" transform="translate(0 0)"/><rect class="cls-1" x="104" y="45.26" width="2" height="3"/><rect class="cls-1" x="104" y="39.26" width="2" height="3"/><rect class="cls-1" x="108.38" y="20" width="3" height="2"/><rect class="cls-1" x="104" y="33.26" width="2" height="3"/><rect class="cls-1" x="104" y="27.26" width="2" height="3"/><path class="cls-1" d="M104,24.26h2V22.5a.5.5,0,0,1,.16-.37l-1.36-1.47a2.51,2.51,0,0,0-.8,1.84Z" transform="translate(0 0)"/><path class="cls-1" d="M109,2h.42V0H109a13,13,0,0,0-2.78.3l.43,2A11,11,0,0,1,109,2Z" transform="translate(0 0)"/><rect class="cls-1" x="104" y="75.26" width="2" height="3"/><rect class="cls-1" x="104" y="69.26" width="2" height="3"/><rect class="cls-1" x="104" y="57.26" width="2" height="3"/><rect class="cls-1" x="104" y="51.26" width="2" height="3"/><rect class="cls-1" x="104" y="63.26" width="2" height="3"/><rect class="cls-1" x="136.42" width="3" height="2"/><path class="cls-1" d="M140.28,14l0-2a1.25,1.25,0,0,1-1.21-.94l-1.94.5A3.25,3.25,0,0,0,140.25,14Z" transform="translate(0 0)"/><rect class="cls-1" x="132.38" y="20" width="3" height="2"/><rect class="cls-1" x="138.38" y="20" width="3" height="2"/><rect class="cls-1" x="104" y="81.26" width="2" height="3"/><rect class="cls-1" x="112.42" width="3" height="2"/><path class="cls-1" d="M139.44,9.31a1.25,1.25,0,0,1,.81-.3h1.4V7h-1.4a3.25,3.25,0,0,0-2.12.79Z" transform="translate(0 0)"/><rect class="cls-1" x="142.42" width="3" height="2"/><rect class="cls-1" x="120.38" y="20" width="3" height="2"/><rect class="cls-1" x="118.42" width="3" height="2"/><rect class="cls-1" x="114.38" y="20" width="3" height="2"/><rect class="cls-1" x="126.38" y="20" width="3" height="2"/><rect class="cls-1" x="124.42" width="3" height="2"/><rect class="cls-1" x="130.42" width="3" height="2"/><path class="cls-1" d="M188,10.72l2-.28a4,4,0,0,0-2.29-3.07l-.84,1.82A2,2,0,0,1,188,10.72Z" transform="translate(0 0)"/><rect class="cls-1" x="96" y="77.74" width="2" height="3"/><rect class="cls-1" x="96" y="83.74" width="2" height="3"/><rect class="cls-1" x="104" y="87.26" width="2" height="3"/><rect class="cls-1" x="96" y="89.74" width="2" height="3"/><rect class="cls-1" x="96" y="65.74" width="2" height="3"/><rect class="cls-1" x="96" y="59.74" width="2" height="3"/><rect class="cls-1" x="96" y="71.74" width="2" height="3"/><path class="cls-1" d="M193.53,2.42A13,13,0,0,0,190.68.87L190,2.74A11,11,0,0,1,192.36,4Z" transform="translate(0 0)"/><path class="cls-1" d="M197.69,7.32a13.09,13.09,0,0,0-1.78-2.71L194.39,5.9a11.12,11.12,0,0,1,1.5,2.3Z" transform="translate(0 0)"/><path class="cls-1" d="M187.29,2.08l.24-2A11.76,11.76,0,0,0,186,0h-1.58V2H186C186.48,2,186.87,2,187.29,2.08Z" transform="translate(0 0)"/><rect class="cls-1" x="143.28" y="12" width="3" height="2"/><rect class="cls-1" x="96" y="95.74" width="2" height="3"/><path class="cls-1" d="M100,6.75,98.32,5.61a13,13,0,0,0-1.5,2.87l1.87.7A11,11,0,0,1,100,6.75Z" transform="translate(0 0)"/><path class="cls-1" d="M98,13a11.16,11.16,0,0,1,.06-1.16l-2-.21A13.33,13.33,0,0,0,96,13v1.74h2Z" transform="translate(0 0)"/><rect class="cls-1" x="96" y="17.74" width="2" height="3"/><rect class="cls-1" x="104" y="93.26" width="2" height="3"/><rect class="cls-1" x="96" y="53.74" width="2" height="3"/><rect class="cls-1" x="96" y="47.74" width="2" height="3"/><rect class="cls-1" x="96" y="41.74" width="2" height="3"/><rect class="cls-1" x="96" y="29.74" width="2" height="3"/><rect class="cls-1" x="96" y="35.74" width="2" height="3"/><rect class="cls-1" x="96" y="23.74" width="2" height="3"/><path class="cls-1" d="M104.07,3.17l-.9-1.79a13.11,13.11,0,0,0-2.69,1.81l1.31,1.51A11.11,11.11,0,0,1,104.07,3.17Z" transform="translate(0 0)"/><rect class="cls-1" x="197" y="100.57" width="2" height="3"/><rect class="cls-1" x="197" y="88.57" width="2" height="3"/><rect class="cls-1" x="197" y="94.57" width="2" height="3"/><rect class="cls-1" x="188" y="34.5" width="2" height="3"/><rect class="cls-1" x="188" y="40.5" width="2" height="3"/><rect class="cls-1" x="188" y="46.5" width="2" height="3"/><rect class="cls-1" x="188" y="22.5" width="2" height="3"/><rect class="cls-1" x="188" y="58.5" width="2" height="3"/><rect class="cls-1" x="188" y="28.5" width="2" height="3"/><rect class="cls-1" x="197" y="82.57" width="2" height="3"/><rect class="cls-1" x="188" y="52.5" width="2" height="3"/><rect class="cls-1" x="197" y="28.57" width="2" height="3"/><rect class="cls-1" x="197" y="22.57" width="2" height="3"/><rect class="cls-1" x="197" y="34.57" width="2" height="3"/><rect class="cls-1" x="197" y="40.57" width="2" height="3"/><rect class="cls-1" x="197" y="16.57" width="2" height="3"/><path class="cls-1" d="M197,13v.57h2V13a13,13,0,0,0-.27-2.61l-2,.4A11,11,0,0,1,197,13Z" transform="translate(0 0)"/><rect class="cls-1" x="197" y="64.57" width="2" height="3"/><rect class="cls-1" x="197" y="70.57" width="2" height="3"/><rect class="cls-1" x="197" y="46.57" width="2" height="3"/><rect class="cls-1" x="197" y="76.57" width="2" height="3"/><rect class="cls-1" x="197" y="58.57" width="2" height="3"/><rect class="cls-1" x="197" y="52.57" width="2" height="3"/><rect class="cls-1" x="168.38" y="20" width="3" height="2"/><rect class="cls-1" x="160.42" width="3" height="2"/><rect class="cls-1" x="162.38" y="20" width="3" height="2"/><path class="cls-1" d="M155.68,9.42a1.24,1.24,0,0,1,.32.83v.5A1.26,1.26,0,0,1,155,12l.47,1.94A3.24,3.24,0,0,0,158,10.75v-.5a3.24,3.24,0,0,0-.82-2.16Z" transform="translate(0 0)"/><rect class="cls-1" x="156.38" y="20" width="3" height="2"/><rect class="cls-1" x="166.42" width="3" height="2"/><rect class="cls-1" x="144.38" y="20" width="3" height="2"/><rect class="cls-1" x="154.42" width="3" height="2"/><rect class="cls-1" x="172.42" width="3" height="2"/><rect class="cls-1" x="144.65" y="7" width="3" height="2"/><rect class="cls-1" x="149.28" y="12" width="3" height="2"/><rect class="cls-1" x="188" y="64.5" width="2" height="3"/><rect class="cls-1" x="150.38" y="20" width="3" height="2"/><rect class="cls-1" x="150.65" y="7" width="3" height="2"/><rect class="cls-1" x="148.42" width="3" height="2"/><rect class="cls-1" x="188" y="94.5" width="2" height="3"/><rect class="cls-1" x="188" y="82.5" width="2" height="3"/><rect class="cls-1" x="188" y="88.5" width="2" height="3"/><rect class="cls-1" x="188" y="70.5" width="2" height="3"/><rect class="cls-1" x="188" y="76.5" width="2" height="3"/><path class="cls-1" d="M184.08,11.55A2,2,0,0,1,184,11a2,2,0,0,1,.92-1.68l-1.08-1.68a4,4,0,0,0-1.68,4.48Z" transform="translate(0 0)"/><rect class="cls-1" x="178.42" width="3" height="2"/><rect class="cls-1" x="180.38" y="20" width="3" height="2"/><path class="cls-1" d="M187.3,12.51A2,2,0,0,1,186,13h0a2,2,0,0,1-.57-.08l-.58,1.92A4,4,0,0,0,186,15h0a4,4,0,0,0,2.61-1Z" transform="translate(0 0)"/><path class="cls-1" d="M188,22.34l1.9-.62A2.5,2.5,0,0,0,187.5,20h-1.12v2h1.12A.5.5,0,0,1,188,22.34Z" transform="translate(0 0)"/><rect class="cls-1" x="174.38" y="20" width="3" height="2"/><path class="cls-1" d="M17.5,82c0-.18-.07-18.31,11.81-30.32C36.29,44.58,46.11,41,58.5,41h5.64L51.52,53.61l5,5,21-21L56.8,16.94l-5,4.95L64,34H58.5c-14.33,0-25.82,4.28-34.17,12.72C10.42,60.79,10.49,81.18,10.5,82Z" transform="translate(0 0)"/></svg>
+                <p>Please use portrait mode.</p>
+            </div>
+
+            <loader :pixiloader="loader"></loader>
+            <div class="mainwrapper">
+
+                <div class="bg">
+                    <div class="menu-icon"><div class="bar"></div> <div class="bar"></div> <div class="bar"></div></div>
+                    <div class="menu-icon2"><div class="bar"></div> <div class="bar"></div> <div class="bar"></div></div>
+
+
+                    <div class="logo2"> 
+                        <a v-if="responsive.screen_xs_max" class="routerLink" v-on:click="goHome()">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path  d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path  d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path  d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+                        </a>
+                        <router-link v-if="responsive.screen_sm" class="routerLink" v-on:click.native="resetHome($event)" to="/Home">
+                            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322.13 251.9"><defs></defs><title>Zeichenfläche 2</title><path  d="M144.19.39l-.25,0V.31C118.49.77,97.09.77,73.52.77c-23.07,0-45,0-70.4-.46L0,41H11.42c5-27.13,5.24-28.33,10.23-31.65,4.07-2.61,10.23-2.86,20.46-2.86H57.32c.5,13.32.5,17.13.5,49.73v50.9c0,33.3,0,38.07-.5,52.11l-16.38,1v5.22c8.55-.48,16.15-.48,31.15-.48s23.07.23,31.18.48v-5.22l-16.41-1c-.24-14-.5-18.8-.5-52.11V56.21c0-32.6.26-36.41.5-49.73H103c2.64,0,7,0,11.28.17,1.62,64.68,103.4,63.93,103.4,116.56,0,15.6-10.5,38.37-39,38.37-29.66,0-47-22.49-53.64-53.38h-8.39v56.38h9.59c1.47-3,2.66-4.79,5.66-4.79,1.5,0,3.3.28,9,2.06,12.26,3.91,26.35,7.52,42,7.52,44.67,0,63.55-34.79,63.55-60.85,0-62.11-90.91-66.79-102.27-108.13"/><path  d="M285.54.53c-8.6,0-25-.27-37.74-.53V6.09L269.43,7.2c.28,20,1.1,147.86,1.1,159.25,0,42.72-2.76,67.68-26.64,79.35v6.1c12.77-3.06,22.48-7.22,33.57-16.63,20.27-18.05,26.36-41.34,26.36-87.41,0-78-.83-119.3,0-140.66l18.31-1.11V0c-11.93.26-28.28.53-36.59.53"/><path  d="M249.73,158.46a42.72,42.72,0,0,0-1.81-7.35,10.08,10.08,0,0,1-.67-3,3.81,3.81,0,0,1,.86-2.67,2.52,2.52,0,0,1,1.89-.93,3,3,0,0,1,2.09.9,3.5,3.5,0,0,1,1,2.67,15,15,0,0,1-1,3.92,24,24,0,0,0-1.33,6.51,24,24,0,0,0,4.65-4.38q3.16-3.67,5.32-3.66a2.8,2.8,0,0,1,1.92.71,2.52,2.52,0,0,1,.81,2,3,3,0,0,1-1.32,2.65,11.11,11.11,0,0,1-4.14,1.43,27.41,27.41,0,0,0-6.68,2.16,18.57,18.57,0,0,0,5.21,1.57c2.92.53,4.81,1.2,5.65,2a3.46,3.46,0,0,1,1.28,2.61,2.36,2.36,0,0,1-.77,1.73,2.64,2.64,0,0,1-1.93.75c-1.53,0-3.32-1.14-5.35-3.37a28.28,28.28,0,0,0-4.65-4.38,25.23,25.23,0,0,0,1.67,7.23,8.73,8.73,0,0,1,.72,2.9,3.78,3.78,0,0,1-.84,2.58,2.54,2.54,0,0,1-2,1,2.77,2.77,0,0,1-2-.95,3.58,3.58,0,0,1-.93-2.63,10,10,0,0,1,.73-3,31.52,31.52,0,0,0,1.67-7.16,21.79,21.79,0,0,0-5.32,5.1c-1.44,1.82-2.85,2.73-4.23,2.73a3.23,3.23,0,0,1-2.08-.7,2.38,2.38,0,0,1-.85-2c0-2.16,1.89-3.55,5.7-4.16q4.65-.78,6.33-1.9a23.27,23.27,0,0,0-6.43-2.12c-3.67-.66-5.49-2-5.49-4.07a2.43,2.43,0,0,1,.86-1.89,2.8,2.8,0,0,1,1.94-.77c1.37,0,2.93,1,4.68,3,.73.86,1.41,1.57,2,2.18Z"/></svg>
+                        </router-link>
+                    </div>
+
+
+                    <router-view class="view"></router-view>
+
+                    <!--<div class="routerLinkLogo"></div>-->
+
+                    <page-home v-if="responsive.screen_lg && (responsive.screen_iOS == false)" :visible="visiblePage == 'page-home'" v-bind:play-shader="playShader" :active="tlCurrentLabel == 'page-home'"></page-home>
+                    <page-home-mobile v-if="responsive.screen_md_max || responsive.screen_iOS" :visible="visiblePage == 'page-home'" :active="tlCurrentLabel == 'page-home'"></page-home-mobile>
+
+
+                    <div class="spriteContainer spriteContainerHome">
+                        <div class="sprite">
+                            <div class="line"></div>
+                        </div>
+                        <div class="sprite">
+                            <div class="spriteInner"></div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="sprite">
+                            <div class="line"></div>
+                        </div>
+                        <div class="sprite">
+                            <div class="line"></div>
+                        </div>
+                        <div class="sprite">
+
+                        </div>
+                    </div>
+                    <div class="spriteContainer spriteContainerAbout">
+
+                        <div class="sprite">
+
+                            <div class="spriteInner">
+                                <div class="positioner videoContainer">
+                                    <video v-if="responsive.screen_lg  && (responsive.screen_iOS == false) && (responsive.screen_FF == false)" id="sampleMovie" loop preload>
+                                        <source src="./videos/tsj_final_video_dasp_cloudconvert.mp4" />
+                                    </video>
+
+                                    <canvas v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" width="1920" height="1080" ></canvas>
+                                    <div v-if="responsive.screen_md_max || responsive.screen_iOS || responsive.screen_FF" class="aboutMobileImage"></div>
+
+
+                                </div>
+
+
+                                <div class="overlay"></div>
+
+                            </div>
+
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+
+                            <div class="spriteInner">
+                                <div class="positioner videoContainer">
+
+
+                                    <canvas v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" width="1920" height="1080" ></canvas>
+                                    <div v-if="responsive.screen_md_max || responsive.screen_iOS || responsive.screen_FF" class="aboutMobileImage"></div>
+
+                                </div>
+                                <div class="overlay"></div>
+
+                            </div>
+
+                            <div class="line"></div>
+
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner videoContainer">
+
+                                    <canvas v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" width="1920" height="1080" ></canvas>
+                                    <div v-if="responsive.screen_md_max || responsive.screen_iOS || responsive.screen_FF" class="aboutMobileImage"></div>
+
+                                </div>
+                                <div class="overlay"></div>
+
+
+                            </div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner videoContainer">
+
+                                    <canvas v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" width="1920" height="1080" ></canvas>
+                                    <div v-if="responsive.screen_md_max || responsive.screen_iOS || responsive.screen_FF" class="aboutMobileImage"></div>
+
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+
+
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner videoContainer">
+
+                                    <canvas v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" width="1920" height="1080" ></canvas>
+                                    <div v-if="responsive.screen_md_max || responsive.screen_iOS || responsive.screen_FF" class="aboutMobileImage"></div>
+
+                                </div>
+                                <div class="overlay"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <page-about v-if="responsive.screen_lg  && (responsive.screen_iOS == false)" :play-Video="playVideo" :visible="visiblePage == 'page-about'" :active="tlCurrentLabel == 'page-about'" :data="pageAbout"></page-about>
+                    <page-about-mobile v-if="responsive.screen_md_max || responsive.screen_iOS" :visible="visiblePage == 'page-about'" :active="tlCurrentLabel == 'page-about'" :data="pageAbout"></page-about-mobile>
+
+
+                    <div class="spriteContainer spriteContainerClarity">
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+
+                            </div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+
+                            </div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <page-clarity  v-if="responsive.screen_sm" :data="pageClarity"  :visible="visiblePage == 'page-clarity'" :active="tlCurrentLabel == 'page-clarity'"></page-clarity>
+                    <page-clarity-mobile v-if="responsive.screen_xs_max" :data="pageClarity" :visible="visiblePage == 'page-clarity'" :active="tlCurrentLabel == 'page-clarity'"></page-clarity-mobile>
+
+                    <div class="spriteContainer spriteContainerContact">
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+
+                                <div class="positioner">
+
+                                    <div class="contactImage active" style="background-image:url('./images/london.jpg')" ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/losangeles.jpg')"  ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/amsterdam.jpg')"   ></div>
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner">
+                                    <div class="contactImage active" style="background-image:url('./images/london.jpg')" ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/losangeles.jpg')"  ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/amsterdam.jpg')"   ></div>
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner">
+
+                                    <div class="contactImage active" style="background-image:url('./images/london.jpg')" ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/losangeles.jpg')"  ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/amsterdam.jpg')"   ></div>
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner">
+
+                                    <div class="contactImage active" style="background-image:url('./images/london.jpg')" ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/losangeles.jpg')"  ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/amsterdam.jpg')"   ></div>
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner">
+                                <div class="positioner">
+                                    <div class="contactImage active" style="background-image:url('./images/london.jpg')" ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/losangeles.jpg')"  ></div>
+                                    <div class="contactImage inactive" style="background-image:url('./images/amsterdam.jpg')"   ></div>
+                                </div>
+
+                                <div class="overlay"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <page-contact :data="pageContact" :visible="visiblePage == 'page-contact'" :active="tlCurrentLabel == 'page-contact'"></page-contact>
+
+                    <div class="spriteContainer spriteContainerJoin">
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+                            <div v-if="responsive.screen_sm" class="shootingStar"></div>
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="sprite">
+                            <div class="spriteInner"></div><div class="line"></div>
+
+                            <div class="spriteHelperExpand">
+                                <div class="lineExpand"></div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <page-join v-if="responsive.screen_sm" :data="pageJoin" :visible="visiblePage == 'page-join'" :active="tlCurrentLabel == 'page-join'"></page-join>
+                    <page-join-mobile v-if="responsive.screen_xs_max" :data="pageJoin" :visible="visiblePage == 'page-join'" :active="tlCurrentLabel == 'page-join'"></page-join-mobile>
+
+                </div>
+
+
+
+
+
+                <!--<menu-main v-if="responsive.screen_md"></menu-main>-->
+                <menu-mobile   v-if="responsive.screen_xs_max"></menu-mobile>
+                <menu-main v-if="responsive.screen_sm"></menu-main>
+            </div>
+
+
+        </div>
+    </body> 
+
+
+
+        <!--<script src="./js/pixi/home_filter.js"></script>-->
+    <script src="./js/app.all.min.js"></script>
+
+
+
+</html>

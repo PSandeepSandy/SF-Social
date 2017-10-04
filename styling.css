@@ -261,23 +261,23 @@
 
 .main-third-back{
 	position:absolute;
-	left:-200vw;	
+	left:-100vw;	
 	width:100%;
 }
 
 .main-third-content{
 	position:absolute;
-	left:-200vw;
+	left:-100vw;
 }
 
 
 .main-fourth-back{
 	position:absolute;
-	left:-300vw;	
+	left:-100vw;	
 	width:100%;
 }
 
 .main-fourth-content{
 	position:absolute;
-	left:-300vw;
+	left:-100vw;
 }
