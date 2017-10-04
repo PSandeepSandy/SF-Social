@@ -83,13 +83,13 @@
 						*/
 
 						
-						$(".grid-second-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards');
-						$(".grid-second-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards 1');
-						$(".grid-second-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
-						$(".grid-second-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
-						$(".grid-second-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
+						$(".grid-second-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
+						$(".grid-second-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
+						$(".grid-second-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards initial');
+						$(".grid-second-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards initial');
+						$(".grid-second-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards initial');	
 												//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-						$(".main-second-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+						$(".main-second-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial' );
 
 						$(".grid-third-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
 						$(".grid-third-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
@@ -120,13 +120,13 @@
 					}				
 					
 					else if(count==3){
-						$(".grid-third-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards');
-						$(".grid-third-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards 1');
-						$(".grid-third-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
-						$(".grid-third-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
-						$(".grid-third-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
+						$(".grid-third-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
+						$(".grid-third-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
+						$(".grid-third-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards initial');
+						$(".grid-third-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards initial');
+						$(".grid-third-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards initial');	
 						//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-						$(".main-third-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+						$(".main-third-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial');
 
 						$(".grid-fourth-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
 						$(".grid-fourth-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
