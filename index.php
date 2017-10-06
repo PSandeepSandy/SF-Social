@@ -1,3 +1,7 @@
+<?php
+	require 'dbconfig/config.php';
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -94,10 +98,41 @@
 
   	<!-- Overlay content -->
   	<div class="overlay-content">
-	    <div>//MESSAGES</div>
+	    <div class="messages">
+	    	<?php
+				if(isset($_POST["addexp"])){
+					echo '<script type="text/javascript"> alert("message taken")</script>';	  			
+		    		$exp_message = $_POST["exptoadd"];
+		    		$like_init = 0;
+		    		$query = "INSERT into messages ";
+		    		$query .="(messages,likes) ";
+		    		$query .="VALUES ('{$exp_message}','{$like_init}')";
+		    		$query_run=mysqli_query($con,$query);
+		    		echo mysqli_affected_rows($con);
+		    		echo mysqli_error($con);
+		    		$_POST['exptoadd']=NULL;
+	    		}
+
+	    		$query = "select * from messages";
+	    		$query_run=mysqli_query($con,$query);
+				while($result=mysqli_fetch_assoc($query_run)){
+			?>
+					<div class="ind-exp">
+						<cite><?php echo $result["messages"];?></cite>
+						<button class="likes">Like</button>
+				<?php
+				}
+				?>	
+
+
+
 	    
-	    <form action="index.php" method="POST">
-			<textarea rows="4" cols="50" id="exptoadd" type="text" name="exptoadd" placeholder="Share your experience here"></textarea>
+	    			</div>
+
+
+
+	    <form action="index.php" method="POST" class="message-input">
+			<textarea rows="4" cols="150" id="exptoadd" type="text" name="exptoadd" placeholder="Share your experience here"></textarea>
 			<input id="submit_btn" type="submit" name="addexp" value="Submit"></input>	    
 	    </form>
 
@@ -113,7 +148,7 @@
 	<script src="js/imagesloaded.pkgd.min.js"></script>
 	<script src="js/textfx.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	
+
 </body>
 	
 </html>

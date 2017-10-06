@@ -55,9 +55,6 @@
 		function scroller(){
 				count++;
 				console.log(count);	
-	
-				
-
 
 				if(direction == -1){
 
