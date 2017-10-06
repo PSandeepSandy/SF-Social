@@ -355,7 +355,7 @@ body{
 .message-input{
 	position:absolute;
 	top:80%;
-	left:10%;
+	left:40%;
 }
 
 #submit_btn{
@@ -398,7 +398,9 @@ body{
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #ded17c;
+	margin-top:5px;
 }
+
 .likes:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f2ab1e), color-stop(1, #f0c911) );
 	background:-moz-linear-gradient( center top, #f2ab1e 5%, #f0c911 100% );
@@ -407,4 +409,24 @@ body{
 }.likes:active {
 	position:relative;
 	top:1px;
+}
+
+.ind-exp{
+	background-color:white;
+	width:75%;
+	position:absolute;
+	left:12.5%;
+
+}
+
+.w3-display-left{
+	position: absolute;
+    top: 25%;
+    left: 0%;
+}
+
+.w3-display-right{
+	position: absolute;
+    top: 25%;
+    right: 0%;
 }

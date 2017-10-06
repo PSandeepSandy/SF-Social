@@ -101,38 +101,45 @@
 	    <div class="messages">
 	    	<?php
 				if(isset($_POST["addexp"])){
-					echo '<script type="text/javascript"> alert("message taken")</script>';	  			
 		    		$exp_message = $_POST["exptoadd"];
 		    		$like_init = 0;
 		    		$query = "INSERT into messages ";
 		    		$query .="(messages,likes) ";
 		    		$query .="VALUES ('{$exp_message}','{$like_init}')";
 		    		$query_run=mysqli_query($con,$query);
-		    		echo mysqli_affected_rows($con);
-		    		echo mysqli_error($con);
 		    		$_POST['exptoadd']=NULL;
 	    		}
 
 	    		$query = "select * from messages";
 	    		$query_run=mysqli_query($con,$query);
+				?>
+				<div class="ind-exp">
+			<?php
 				while($result=mysqli_fetch_assoc($query_run)){
 			?>
-					<div class="ind-exp">
-						<cite><?php echo $result["messages"];?></cite>
-						<button class="likes">Like</button>
+						<cite class="mySlides"><?php echo $result["messages"];?>
+							<br>
+							<?php
+								if($result["likes"] !=0){
+							?>
+							<small><i><?php echo $result["likes"]?> people like this</i></small><?php }?>
+							<button class="likes" onclick="increase_likes()">Like</button>
+						</cite>
+						
 				<?php
 				}
 				?>	
 
 
-
+					<button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+					<button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
 	    
-	    			</div>
+	    		</div>
 
 
 
 	    <form action="index.php" method="POST" class="message-input">
-			<textarea rows="4" cols="150" id="exptoadd" type="text" name="exptoadd" placeholder="Share your experience here"></textarea>
+			<textarea rows="4" cols="50" id="exptoadd" type="text" name="exptoadd" placeholder="Share your experience here"></textarea>
 			<input id="submit_btn" type="submit" name="addexp" value="Submit"></input>	    
 	    </form>
 
