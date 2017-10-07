@@ -102,7 +102,7 @@
 
 					}		
 
-					if((curtime-time)>100){ 
+					if((curtime-time)>1600){ 
 
 					time = curtime;					
 
