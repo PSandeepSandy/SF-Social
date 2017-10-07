@@ -1,5 +1,6 @@
 body{
 	overflow-x:hidden;
+	font:'Roboto Condensed', Avenir, sans-serif;
 }
 
 
@@ -20,7 +21,7 @@ body{
 	left:0;
 	background:url("test.png");
 	/*background-color:white;*/
-	border:0.1px solid grey;
+	
 }
 
 .grid-first-two{
@@ -32,7 +33,7 @@ body{
 	background:url("test.png");
 	background-position: 0% 21%;
 	/*background-color:white;*/
-	border:0.1px solid grey;
+	
 }
 
 .grid-first-three{
@@ -44,7 +45,7 @@ body{
 	background:url("test.png");
 	background-position: 0% 42%;
 	/*background-color:white;*/
-	border:0.1px solid grey;
+	
 }
 
 .grid-first-four{
@@ -56,7 +57,7 @@ body{
 	background:url("test.png");
 	background-position: 0% 63%;
 	/*background-color:white;*/
-	border:0.1px solid grey;
+	
 }
 
 .grid-first-five{
@@ -68,8 +69,7 @@ body{
 	background:url("test.png");
 	background-position: 0% 84%;
 	/*background-color:white;*/
-	border-top:0.1px solid grey;
-
+	
 }
 
 
@@ -355,13 +355,14 @@ body{
 .message-input{
 	position:absolute;
 	top:80%;
-	left:40%;
+	left:35%;
 }
 
 #submit_btn{
 	position: absolute;
 	top:70%;
 	left:102%;
+	margin-bottom:5%;
 }
 
 .likes {
@@ -430,3 +431,4 @@ body{
     top: 25%;
     right: 0%;
 }
+
