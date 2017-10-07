@@ -85,11 +85,11 @@
 						if(direction === -1){
 							$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
 							$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
-							$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
-							$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
-							$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
+							$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards initial');
+							$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards initial');
+							$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards initial');	
 							//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-							$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+							$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial');
 
 							$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
 							$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
@@ -102,7 +102,7 @@
 
 					}		
 
-					if((curtime-time)>1600){ 
+					if((curtime-time)>100){ 
 
 					time = curtime;					
 
@@ -112,13 +112,13 @@
 							
 							if(count==0){
 
-								$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards');
-								$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards');
-								$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
-								$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
-								$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
+								$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
+								$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
+								$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards initial');
+								$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards initial');
+								$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards initial');	
 								//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-								$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+								$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial');
 
 								$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
 								$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards');
@@ -142,7 +142,7 @@
 								$(".main-second-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial' );
 
 								$(".grid-third-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
-								$(".grid-third-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
+								$(".grid-third-two").playKeyframe('entering 0.5s ease 0.2s normal forwards ');
 								$(".grid-third-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards');
 								$(".grid-third-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards');
 								$(".grid-third-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards');
@@ -162,7 +162,7 @@
 								$(".main-third-content").playKeyframe('scrollthetext 1s ease 1 normal forwards initial');
 
 								$(".grid-fourth-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
-								$(".grid-fourth-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
+								$(".grid-fourth-two").playKeyframe('entering 0.5s ease 0.2s normal forwards ');
 								$(".grid-fourth-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards');
 								$(".grid-fourth-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards');
 								$(".grid-fourth-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards');
