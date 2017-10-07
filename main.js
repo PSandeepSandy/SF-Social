@@ -54,13 +54,20 @@
 				});
 
 		        $("body").on('touchstart', function(e) {
-		            lastLoc = e.originalEvent.touches[0].pageX;
+		            lastLoc = e.originalEvent.touches[0].clientX;
 		        });
 
 		        $("body").on('touchend', function(e) {
-		            var newLoc = e.originalEvent.changedTouches[0].pageX;
-		            alert("lastLoc = "+lastLoc+", newLoc = "+newLoc);
-		        	
+		            var newLoc = e.originalEvent.changedTouches[0].clientX;
+		            if(newLoc-lastLoc>0){
+		            	direction = -1;
+		            }
+		        	else if(newLoc-lastLoc<0){
+		        		direction = 1
+		        	}
+		        	console.log(direction);
+
+		        	scroller();
 
 		        });
 
@@ -75,21 +82,23 @@
 						date = new Date();
 						time = date.getTime();			
 						
-						$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
-						$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
-						$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
-						$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
-						$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
-						//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
-						$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
+						if(direction === -1){
+							$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
+							$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
+							$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
+							$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
+							$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
+							//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
+							$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
 
-						$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
-						$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
-						$(".grid-second-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards');
-						$(".grid-second-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards');
-						$(".grid-second-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards');
+							$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
+							$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
+							$(".grid-second-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards');
+							$(".grid-second-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards');
+							$(".grid-second-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards');
 
-						count++;
+							count++;
+						}
 
 					}		
 
@@ -165,7 +174,7 @@
 					}
 
 					else if(direction === 1){
-
+						console.log("count ".count);
 						
 						//Just the reverse animations...
 						if(count==3){
