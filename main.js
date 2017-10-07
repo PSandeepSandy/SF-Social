@@ -1,6 +1,7 @@
 		var count = 0;
 		var timedOut = 0;
 		var direction=0;
+		var lastLoc = 0;
 		
 		var date;
 
@@ -51,13 +52,21 @@
 				            console.log('scrolling down !');
 				        }
 				});
-	
 
+		        $("body").on('touchstart', function(e) {
+		            lastLoc = e.originalEvent.touches[0].pageX;
+		        });
+
+		        $("body").on('touchend', function(e) {
+		            var newLoc = e.originalEvent.changedTouches[0].pageX;
+		            alert("lastLoc = "+lastLoc+", newLoc = "+newLoc);
+		        	
+
+		        });
 
 
 		function scroller(){
 	
-
 				setTimeout(function(){
 					var curdate = new Date();
 					curtime = curdate.getTime();
@@ -66,8 +75,8 @@
 						date = new Date();
 						time = date.getTime();			
 						
-						$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards');
-						$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards 1');
+						$(".grid-first-one").playKeyframe('scrollit 1s ease-in 0s 1 normal forwards initial');
+						$(".grid-first-two").playKeyframe('scrollit 0.5s ease 0.2s normal forwards initial');
 						$(".grid-first-three").playKeyframe('scrollit 1.2s ease-in 0.4s 1 normal forwards');
 						$(".grid-first-four").playKeyframe('scrollit 0.2s ease 0.6s 1 normal forwards');
 						$(".grid-first-five").playKeyframe('scrollit 0.6s ease-in 0.8s 1 normal forwards');	
@@ -102,11 +111,11 @@
 								//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
 								$(".main-first-content").playKeyframe('scrollthetext 1s ease 1 normal forwards');
 
-								$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards');
-								$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards 1');
-								$(".grid-second-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards');
-								$(".grid-second-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards');
-								$(".grid-second-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards');
+								$(".grid-second-one").playKeyframe('entering 1s ease-in 0s 1 normal forwards',complete(function(){$(".grid-second-one").css("animation","initial");}));
+								$(".grid-second-two").playKeyframe('entering 0.5s ease 0.2s normal forwards',complete(function(){$(".grid-second-one").css("animation","initial");}));
+								$(".grid-second-three").playKeyframe('entering 1.2s ease-in 0.4s 1 normal forwards',complete(function(){$(".grid-second-one").css("animation","initial");}));
+								$(".grid-second-four").playKeyframe('entering 0.2s ease 0.6s 1 normal forwards',complete(function(){$(".grid-second-one").css("animation","initial");}));
+								$(".grid-second-five").playKeyframe('entering 0.6s ease-in 0.8s 1 normal forwards',complete(function(){$(".grid-second-one").css("animation","initial");}));
 
 								count++;
 								//timedOut++;
@@ -160,14 +169,6 @@
 						
 						//Just the reverse animations...
 						if(count==3){
-							$(".grid-fourth-one").playKeyframe('enteringrev 1s ease-in 0s 1 normal forwards');
-							$(".grid-fourth-two").playKeyframe('enteringrev 0.5s ease 0.2s normal forwards 1');
-							$(".grid-fourth-three").playKeyframe('enteringrev 1.2s ease-in 0.4s 1 normal forwards');
-							$(".grid-fourth-four").playKeyframe('enteringrev 0.2s ease 0.6s 1 normal forwards');
-							$(".grid-fourth-five").playKeyframe('enteringrev 0.6s ease-in 0.8s 1 normal forwards');
-						
-							$(".main-fourth-content").playKeyframe('scrollthetextrev 1s ease 1 normal forwards initial');
-
 							$(".grid-third-one").playKeyframe('scrollitrev 1s ease-in 0s 1 normal forwards initial');
 							$(".grid-third-two").playKeyframe('scrollitrev 0.5s ease 0.2s normal forwards initial');
 							$(".grid-third-three").playKeyframe('scrollitrev 1.2s ease-in 0.4s 1 normal forwards initial');
@@ -175,6 +176,14 @@
 							$(".grid-third-five").playKeyframe('scrollitrev 0.6s ease-in 0.8s 1 normal forwards initial');	
 							//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
 							$(".main-third-content").playKeyframe('scrollthetextrev 1s ease 1 normal forwards initial');
+
+							$(".grid-fourth-one").playKeyframe('enteringrev 1s ease-in 0s 1 normal forwards');
+							$(".grid-fourth-two").playKeyframe('enteringrev 0.5s ease 0.2s normal forwards ');
+							$(".grid-fourth-three").playKeyframe('enteringrev 1.2s ease-in 0.4s 1 normal forwards');
+							$(".grid-fourth-four").playKeyframe('enteringrev 0.2s ease 0.6s 1 normal forwards');
+							$(".grid-fourth-five").playKeyframe('enteringrev 0.6s ease-in 0.8s 1 normal forwards');
+						
+							$(".main-fourth-content").playKeyframe('scrollthetextrev 1s ease 1 normal forwards initial');
 
 							count--;
 							return;
@@ -212,14 +221,14 @@
 								
 							$(".main-second-content").playKeyframe('scrollthetextrev 1s ease 1 normal forwards initial' );
 						
-							$(".grid-first-one").playKeyframe('scrollitrev 1s ease-in 0s 1 normal forwards initial');
+							/*$(".grid-first-one").playKeyframe('scrollitrev 1s ease-in 0s 1 normal forwards initial');
 							$(".grid-first-two").playKeyframe('scrollitrev 0.5s ease 0.2s normal forwards initial');
 							$(".grid-first-three").playKeyframe('scrollitrev 1.2s ease-in 0.4s 1 normal forwards initial');
 							$(".grid-first-four").playKeyframe('scrollitrev 0.2s ease 0.6s 1 normal forwards initial');
 							$(".grid-first-five").playKeyframe('scrollitrev 0.6s ease-in 0.8s 1 normal forwards initial');	
 							//TO BE CHANGED AND TO INCORPORATE GRADUAL SCROLL
 							$(".main-first-content").playKeyframe('scrollthetextrev 1s ease 1 normal forwards initial' );
-
+*/
 							count--;
 							return;
 						}
@@ -231,9 +240,7 @@
 					return;
 				}
 
-				},100);
-		
-				
+				},100);	
 
 		};
 /*
