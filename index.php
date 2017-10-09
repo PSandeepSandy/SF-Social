@@ -34,14 +34,13 @@
 
 <head>
 	<meta charset = "UTF-8">
-	<title>Mental-Health Awareness</title>
+	<title>Umang | Spring Fest 2018</title>
+	<link rel="icon" href="umang.png" sizes="16x16" type="image/png">
 	<link rel="stylesheet" type="text/css" href="styling.css">
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="jquery.keyframes.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Arapey|Archivo+Black|Elsie+Swash+Caps|Playfair+Display|Anton|Rubik|Teko:600|Sacramento|Abril+Fatface|Cormorant+Garamond|Neucha|Unica+One|Old+Standard+TT" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Merriweather|Special+Elite" rel="stylesheet">
-	<!-- <link rel="stylesheet" type="text/css" href="materialize.min.css" />
- -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Special+
 </head>
 
 <body onwheel="scroller()">
@@ -197,7 +196,7 @@
 	</div>
 
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="fade-in-effect.js"></script>
+	<!-- <script type="text/javascript" src="fade-in-effect.js"></script> -->
 	<!-- <script src="materialize.min.js"></script> -->
 
 </body>
